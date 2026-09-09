@@ -42,8 +42,8 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // --- Health check ---
-app.get('/api/health', (req, res) => {
-  res.status(200).json({ success: true, message: 'Citizen Complaint Portal API is running.' });
+app.get('/', (req, res) => {
+  res.status(200).json({ success: true, message: 'Citizen Complaint Portal backend service.' });
 });
 
 // --- API routes ---

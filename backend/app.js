@@ -1,8 +1,28 @@
+// Load env vars first (needed both locally via server.js AND on Vercel via app.js)
+require('dotenv').config();
+
 const path = require('path');
 const fs = require('fs');
+const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+
+// --- Database connection (serverless-safe: reuses existing connection) ---
+// On Vercel each serverless function invocation may reuse a warm container,
+// so we only call mongoose.connect() when there is no active connection.
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return; // already connected / connecting
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('[MongoDB] Connected');
+  } catch (err) {
+    console.error('[MongoDB] Connection failed:', err.message);
+    // Do NOT call process.exit() in serverless — just let the request fail gracefully
+    throw err;
+  }
+};
+connectDB();
 
 const authRoutes = require('./routes/authRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
@@ -28,7 +48,7 @@ app.use(
       if (
         !origin ||
         allowedOrigins.includes(origin) ||
-        /^https:\/\/[a-zA-Z0-9-]+(\.vercel\.app)$/.test(origin)
+        /^https:\/\/.*\.vercel\.app$/.test(origin)
       ) {
         return callback(null, true);
       }

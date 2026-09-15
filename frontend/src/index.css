@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  /* Balochistan Citizen Complaint Portal - official green & gold theme */
+  --color-brand-dark: #0b3d2c;      /* deep forest green - navbar, footer, dark surfaces */
+  --color-brand-cyan: #c9a227;      /* gold - primary accent, replaces old cyan everywhere */
+  --color-brand-pink: #b3261e;      /* crimson - alerts / officer-only accents, replaces old pink */
+  --color-brand-light: #fbf8ef;     /* warm cream page background, replaces old light gray */
+
+  /* Extra tokens used for the redesigned hero / marketing sections */
+  --color-brand-green: #0f6b3f;
+  --color-brand-green-deep: #06301f;
+  --color-brand-gold: #c9a227;
+  --color-brand-gold-light: #e7cf74;
+  --color-brand-cream: #fbf8ef;
+}
+
+/* Responsive portal background: mobile background for mobile UI, PC background for PC UI */
+.portal-bg-responsive {
+  background-image: url('/bg-mobile.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 768px) {
+  .portal-bg-responsive {
+    background-image: url('/bg-pc.jpg');
+    background-position: center center;
+  }
+}
+
+/* ==========================================================================
+   Smooth, High-Performance Web Animations & Micro-Interactions
+   ========================================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gentle ambient levitation for hero cards, emblem, floating badges */
+@keyframes float-subtle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Calibrated gold aura for high-priority elements & badges */
+@keyframes aura-gold {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(201, 162, 39, 0);
+  }
+}
+
+/* Subtle shimmer for skeletons & accent badges */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Gentle beacon pulse for live status indicators */
+@keyframes beacon-ping {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.animate-float-subtle {
+  animation: float-subtle 4.5s ease-in-out infinite;
+}
+
+.animate-aura-gold {
+  animation: aura-gold 3s ease-in-out infinite;
+}
+
+.animate-beacon {
+  animation: beacon-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Tactile card hover lift utility */
+.card-hover-effect {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+}
+.card-hover-effect:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -6px rgba(11, 61, 44, 0.12), 0 4px 12px -2px rgba(201, 162, 39, 0.08);
+  border-color: rgba(201, 162, 39, 0.4);
+}
+
+/* Tactile button press feedback */
+button:not(:disabled), [role="button"]:not(:disabled) {
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+button:not(:disabled):active, [role="button"]:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+/* Reduced motion accessibility compliance */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

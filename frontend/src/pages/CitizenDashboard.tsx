@@ -1,0 +1,285 @@
+import React, { useEffect, useState } from 'react';
+import { motion } from 'motion/react';
+import { useAuth } from '../context/AuthContext';
+import { api } from '../services/api';
+import { Complaint } from '../types';
+import { StatusBadge } from '../components/StatusBadge';
+import { PriorityBadge } from '../components/PriorityBadge';
+import {
+  FilePlus2,
+  ListTodo,
+  Compass,
+  Clock,
+  RotateCw,
+  CheckCircle2,
+  AlertCircle,
+  ThumbsUp,
+  Star,
+  MapPin,
+  Calendar,
+  ArrowRight
+} from 'lucide-react';
+
+interface CitizenDashboardProps {
+  navigate: (path: string) => void;
+}
+
+export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) => {
+  const { user } = useAuth();
+  const [myComplaints, setMyComplaints] = useState<Complaint[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    api.getMyComplaints()
+      .then(res => {
+        if (mounted && res.success) {
+          setMyComplaints(res.complaints);
+        }
+      })
+      .catch(console.error)
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const total = myComplaints.length;
+  const pending = myComplaints.filter(c => c.status === 'pending').length;
+  const inProgress = myComplaints.filter(c => c.status === 'in-progress').length;
+  const resolved = myComplaints.filter(c => c.status === 'resolved').length;
+
+  const pendingFeedbackList = myComplaints.filter(c => c.status === 'resolved' && !c.feedbackGiven);
+
+  const formatTicketId = (rawId: string) => {
+    if (rawId.startsWith('cmp_')) {
+      const num = rawId.replace('cmp_', '');
+      return `#CP-${num.padStart(4, '0')}`;
+    }
+    return `#CP-${rawId.slice(-4).toUpperCase()}`;
+  };
+
+  return (
+    <div className="space-y-6 py-6 font-sans">
+      {/* Welcome Technical Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.32, ease: 'easeOut' }}
+        className="bg-gradient-to-br from-slate-900 via-brand-green-deep to-slate-900 text-white rounded-3xl p-6 sm:p-7 border border-brand-gold/30 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden"
+      >
+        <div className="space-y-2 relative z-10">
+          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-brand-gold text-brand-dark text-[10px] font-black uppercase tracking-wider shadow-xs">
+            <span>Verified Citizen Account</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+            Welcome, {user?.name || 'Resident'}
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-light leading-relaxed">
+            Monitor real-time incident reports, review public officer remarks, and provide post-resolution satisfaction ratings.
+          </p>
+        </div>
+
+        {/* Quick Actions in Technical Theme */}
+        <div className="flex flex-wrap items-center gap-3 relative z-10">
+          <motion.button
+            id="dashboard-report-btn"
+            whileHover={{ scale: 1.04, y: -2 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => navigate('/complaints/new')}
+            className="px-4 py-2 rounded-full bg-brand-green hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider shadow flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <FilePlus2 size={15} />
+            <span>Report Incident</span>
+          </motion.button>
+          <motion.button
+            id="dashboard-my-complaints-btn"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => navigate('/complaints/mine')}
+            className="px-4 py-2 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <ListTodo size={15} />
+            <span>My Records ({total})</span>
+          </motion.button>
+          <motion.button
+            id="dashboard-browse-btn"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={() => navigate('/complaints')}
+            className="px-4 py-2 rounded-full bg-slate-800/90 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <Compass size={15} className="text-brand-gold" />
+            <span>Incident Feed</span>
+          </motion.button>
+        </div>
+
+        {/* Decorative backdrop symbol */}
+        <svg className="absolute right-[-10px] bottom-[-10px] w-40 h-40 opacity-10 text-brand-gold pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z"></path>
+        </svg>
+      </motion.div>
+
+      {/* Pending Citizen Feedback Banner */}
+      {pendingFeedbackList.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="p-4 rounded-2xl bg-amber-50/95 backdrop-blur-xs border border-amber-200 text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+              <Star size={18} className="fill-amber-500 text-amber-500" />
+            </div>
+            <div>
+              <p className="font-bold text-xs sm:text-sm text-amber-950 uppercase tracking-wide">
+                Resolution Feedback Requested ({pendingFeedbackList.length} ticket{pendingFeedbackList.length > 1 ? 's' : ''})
+              </p>
+              <p className="text-xs text-amber-800">
+                A recent complaint was marked resolved. Rate the repair quality to update the municipal satisfaction score.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => navigate(`/complaints/${pendingFeedbackList[0]._id}`)}
+            className="px-4 py-1.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-wider shrink-0 transition-colors cursor-pointer"
+          >
+            Rate Resolution
+          </button>
+        </motion.div>
+      )}
+
+      {/* Statistics Cards - Technical Grid Style */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { label: 'Total Filed', val: total, sub: 'Resident incident logs', color: 'text-slate-900', subColor: 'text-slate-400' },
+          { label: 'Pending Review', val: pending, sub: 'Awaiting assignment', color: 'text-amber-600', subColor: 'text-amber-500' },
+          { label: 'In Progress', val: inProgress, sub: 'Active crew dispatch', color: 'text-indigo-600', subColor: 'text-indigo-500' },
+          { label: 'Resolved', val: resolved, sub: 'Repairs completed', color: 'text-emerald-600', subColor: 'text-emerald-500' },
+        ].map((item, i) => (
+          <motion.div
+            key={item.label}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08 + i * 0.04, duration: 0.28 }}
+            whileHover={{ y: -4, scale: 1.015, borderColor: '#c9a227', boxShadow: '0 10px 24px -6px rgba(11, 61, 44, 0.1)' }}
+            className="bg-white/95 backdrop-blur-xs p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-colors cursor-default"
+          >
+            <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">{item.label}</div>
+            <div className={`text-2xl font-bold ${item.color}`}>{item.val}</div>
+            <div className={`text-[10px] font-medium mt-0.5 ${item.subColor}`}>{item.sub}</div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Your Recent Filed Complaints Data Grid */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Your Active Complaints Registry</h2>
+            <p className="text-xs text-slate-400 font-mono">Live incident status & department remark tracking</p>
+          </div>
+          {myComplaints.length > 0 && (
+            <button
+              onClick={() => navigate('/complaints/mine')}
+              className="text-xs font-bold uppercase tracking-wider text-teal-600 hover:text-teal-800 flex items-center gap-1"
+            >
+              <span>View All Records</span>
+              <ArrowRight size={13} />
+            </button>
+          )}
+        </div>
+
+        {loading ? (
+          <div className="space-y-3">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-24 rounded-xl bg-slate-100 animate-pulse border border-slate-200" />
+            ))}
+          </div>
+        ) : myComplaints.length === 0 ? (
+          <div className="p-8 text-center bg-slate-50 rounded-xl border border-slate-200 text-slate-500 space-y-3">
+            <AlertCircle size={32} className="mx-auto text-slate-400" />
+            <p className="text-sm font-medium text-slate-700">No complaints filed under this citizen account.</p>
+            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+              Spot a pothole, broken streetlight, or garbage backlog? File a report to alert municipal teams.
+            </p>
+            <button
+              onClick={() => navigate('/complaints/new')}
+              className="px-4 py-2 rounded-full bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold uppercase tracking-wider shadow"
+            >
+              Report Incident Now
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {myComplaints.slice(0, 5).map((complaint, idx) => (
+              <motion.div
+                key={complaint._id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.05, duration: 0.25 }}
+                whileHover={{ x: 4, borderColor: '#c9a227', boxShadow: '0 8px 20px -4px rgba(11, 61, 44, 0.08)' }}
+                onClick={() => navigate(`/complaints/${complaint._id}`)}
+                className="p-4 rounded-xl bg-white/90 hover:bg-white border border-slate-200 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+              >
+                <div className="space-y-1.5 max-w-2xl">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs font-mono text-slate-400">
+                      {formatTicketId(complaint._id)}
+                    </span>
+                    <span className="text-[11px] font-medium px-2 py-0.5 rounded bg-white text-slate-700 border border-slate-200">
+                      {complaint.category}
+                    </span>
+                    <PriorityBadge priority={complaint.priority} score={complaint.priorityScore} size="sm" />
+                    <StatusBadge status={complaint.status} size="sm" />
+                    {complaint.status === 'resolved' && !complaint.feedbackGiven && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold flex items-center gap-1">
+                        <Star size={10} className="fill-amber-600 text-amber-600" />
+                        Rating Required
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-semibold text-slate-900 text-sm group-hover:text-teal-700 transition-colors line-clamp-1">
+                    {complaint.title}
+                  </h3>
+
+                  {complaint.officerRemark && (
+                    <div className="text-xs text-slate-600 bg-white px-2.5 py-1.5 rounded-md border border-slate-200">
+                      <strong className="text-slate-900">Officer Remark:</strong> {complaint.officerRemark}
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-4 text-[11px] text-slate-400 font-mono pt-0.5">
+                    <span className="flex items-center gap-1 text-slate-600">
+                      <MapPin size={11} />
+                      {complaint.area}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar size={11} />
+                      Filed {new Date(complaint.createdAt).toLocaleDateString()}
+                    </span>
+                    <span className="flex items-center gap-1 text-teal-600 font-bold">
+                      <ThumbsUp size={11} />
+                      {complaint.upvotes}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="self-end sm:self-center shrink-0">
+                  <span className="text-[10px] font-black uppercase text-teal-600 group-hover:text-teal-800 tracking-wider flex items-center gap-1">
+                    <span>Manage</span>
+                    <ArrowRight size={12} />
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

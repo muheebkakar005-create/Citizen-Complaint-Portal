@@ -21,6 +21,10 @@
     "express-validator": "^7.2.0",
     "json2csv": "^6.0.0-alpha.2",
     "jsonwebtoken": "^9.0.2",
+<<<<<<< HEAD
+=======
+    "mongodb": "^7.6.0",
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     "mongoose": "^8.8.3",
     "morgan": "^1.10.0",
     "multer": "^2.0.1",

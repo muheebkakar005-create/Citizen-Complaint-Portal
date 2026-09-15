@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const connectDB = require('../config/db');
 const User = require('../models/User');
 const Complaint = require('../models/Complaint');
+<<<<<<< HEAD
 const { officer, admin, citizens, complaintTemplates } = require('./seedData');
+=======
+const { officer, citizens, complaintTemplates } = require('./seedData');
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
 const DAY_MS = 1000 * 60 * 60 * 24;
 
@@ -26,9 +30,12 @@ async function seed() {
   console.log('[Seed] Creating officer account...');
   const officerDoc = await User.create(officer);
 
+<<<<<<< HEAD
   console.log('[Seed] Creating admin account...');
   const adminDoc = await User.create(admin);
 
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   console.log(`[Seed] Creating ${citizens.length} citizen accounts...`);
   const citizenDocs = [];
   for (const citizen of citizens) {
@@ -88,7 +95,10 @@ async function seed() {
   console.log('----------------------------------------');
   console.log('Demo accounts:');
   console.log(`  Officer -> email: ${officer.email} | password: ${officer.password}`);
+<<<<<<< HEAD
   console.log(`  Admin   -> email: ${admin.email} | password: ${admin.password}`);
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   citizens.forEach((c) => {
     console.log(`  Citizen -> email: ${c.email} | password: ${c.password}`);
   });

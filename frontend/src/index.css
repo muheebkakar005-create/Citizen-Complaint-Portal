@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+<<<<<<< HEAD
   /* Balochistan Citizen Complaint Portal - official green & gold theme */
   --color-brand-dark: #0b3d2c;      /* deep forest green - navbar, footer, dark surfaces */
   --color-brand-cyan: #c9a227;      /* gold - primary accent, replaces old cyan everywhere */
@@ -122,4 +123,10 @@ button:not(:disabled):active, [role="button"]:not(:disabled):active {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+=======
+  --color-brand-cyan: #08D9D6;
+  --color-brand-dark: #252A34;
+  --color-brand-pink: #FF2E63;
+  --color-brand-light: #EAEAEA;
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 }

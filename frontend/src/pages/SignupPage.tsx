@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { Logo } from '../components/Logo';
@@ -51,12 +54,16 @@ export const SignupPage: React.FC<SignupPageProps> = ({ navigate }) => {
 
   return (
     <div className="max-w-md mx-auto py-12 px-4 font-sans">
+<<<<<<< HEAD
       <motion.div
         initial={{ opacity: 0, y: 18, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="bg-white/95 backdrop-blur-md p-8 rounded-3xl border border-brand-gold/30 shadow-2xl space-y-6"
       >
+=======
+      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         <div className="text-center space-y-3">
           <div className="flex justify-center">
             <Logo size="md" />
@@ -132,7 +139,11 @@ export const SignupPage: React.FC<SignupPageProps> = ({ navigate }) => {
             id="signup-submit-btn"
             type="submit"
             disabled={submitting}
+<<<<<<< HEAD
             className="w-full py-2.5 px-4 rounded-full bg-brand-cyan hover:bg-brand-gold-light text-brand-dark font-black text-xs uppercase tracking-wider shadow-md hover:shadow-amber-500/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
+=======
+            className="w-full py-2.5 px-4 rounded-full bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark font-black text-xs uppercase tracking-wider shadow-md hover:shadow-cyan-500/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           >
             <span>{submitting ? 'Creating Account...' : 'Register Account'}</span>
           </button>
@@ -147,7 +158,11 @@ export const SignupPage: React.FC<SignupPageProps> = ({ navigate }) => {
             Sign In Here
           </button>
         </div>
+<<<<<<< HEAD
       </motion.div>
+=======
+      </div>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     </div>
   );
 };

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { motion, AnimatePresence } from 'motion/react';
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 import { useAuth } from '../context/AuthContext';
 import { Logo } from './Logo';
 import {
@@ -11,8 +14,12 @@ import {
   X,
   Compass,
   Building2,
+<<<<<<< HEAD
   UserCheck,
   ShieldCheck as ShieldCheckIcon
+=======
+  UserCheck
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -37,7 +44,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
 
   const isCitizen = user?.role === 'citizen';
   const isOfficer = user?.role === 'officer';
+<<<<<<< HEAD
   const isAdmin = user?.role === 'admin';
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
   const getInitials = (name?: string) => {
     if (!name) return 'CP';
@@ -105,7 +115,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                   className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm cursor-pointer ${
                     currentPath === '/complaints/new'
                       ? 'bg-brand-cyan text-brand-dark ring-2 ring-brand-cyan/50 font-black'
+<<<<<<< HEAD
                       : 'bg-brand-cyan hover:bg-brand-gold-light text-brand-dark hover:shadow-md'
+=======
+                      : 'bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark hover:shadow-md'
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                   }`}
                 >
                   <FilePlus2 size={13} />
@@ -133,14 +147,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                 onClick={() => handleNav('/officer/dashboard')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 shadow-sm cursor-pointer ${
                   currentPath.startsWith('/officer')
+<<<<<<< HEAD
                     ? 'bg-brand-gold text-brand-dark ring-2 ring-brand-gold/50 font-black'
                     : 'bg-brand-gold hover:bg-brand-gold-light text-brand-dark hover:shadow-md'
+=======
+                    ? 'bg-brand-pink text-white ring-2 ring-brand-pink/50 font-black'
+                    : 'bg-brand-pink hover:bg-[#e02656] text-white hover:shadow-md'
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                 }`}
               >
                 <Building2 size={14} />
                 <span>Officer Dashboard</span>
               </button>
             )}
+<<<<<<< HEAD
 
             {isAdmin && (
               <button
@@ -156,6 +176,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                 <span>Admin Dashboard</span>
               </button>
             )}
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </nav>
 
           {/* User Auth Section Desktop */}
@@ -171,8 +193,13 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                     <div className="text-xs font-semibold text-white leading-tight flex items-center gap-1.5">
                       <span className="truncate max-w-[120px]">{user.name}</span>
                     </div>
+<<<<<<< HEAD
                     <p className="text-[10px] text-brand-gold-light font-mono leading-tight">
                       {isAdmin ? 'Administrator' : isOfficer ? 'Officer / District-HQ' : 'Verified Resident'}
+=======
+                    <p className="text-[10px] text-brand-cyan font-mono leading-tight">
+                      {isOfficer ? 'Officer/District-HQ' : 'Verified Resident'}
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                     </p>
                   </div>
                 </div>
@@ -198,10 +225,17 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                 <button
                   id="nav-signup-btn"
                   onClick={() => handleNav('/signup')}
+<<<<<<< HEAD
                   className="px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider bg-brand-cyan hover:bg-brand-gold-light text-brand-dark rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
                 >
                   <UserCheck size={14} />
                   <span>Register</span>
+=======
+                  className="px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark rounded-full shadow-sm hover:shadow transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <UserCheck size={14} />
+                  <span>Citizen Register</span>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                 </button>
               </div>
             )}
@@ -220,6 +254,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
         </div>
       </div>
 
+<<<<<<< HEAD
       {/* Mobile Drawer with smooth slide & fade animation */}
       <AnimatePresence>
         {mobileMenuOpen && (
@@ -230,6 +265,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
             className="md:hidden bg-brand-dark border-b border-slate-700 px-4 pt-2 pb-6 space-y-2 overflow-hidden"
           >
+=======
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-brand-dark border-b border-slate-700 px-4 pt-2 pb-6 space-y-2">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           {user && (
             <div className="p-3 mb-2 rounded bg-slate-800/90 border border-slate-700 flex items-center justify-between">
               <div className="flex items-center gap-2.5">
@@ -290,6 +330,7 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
           {isOfficer && (
             <button
               onClick={() => handleNav('/officer/dashboard')}
+<<<<<<< HEAD
               className="w-full text-left px-3 py-2 rounded text-xs font-bold uppercase tracking-wider text-brand-gold hover:bg-slate-800 flex items-center gap-2"
             >
               <Building2 size={14} />
@@ -304,6 +345,12 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
             >
               <ShieldCheckIcon size={14} />
               <span>Admin Dashboard</span>
+=======
+              className="w-full text-left px-3 py-2 rounded text-xs font-bold uppercase tracking-wider text-brand-pink hover:bg-slate-800 flex items-center gap-2"
+            >
+              <Building2 size={14} />
+              <span>Officer Operations Console</span>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             </button>
           )}
 
@@ -333,9 +380,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
               </>
             )}
           </div>
+<<<<<<< HEAD
           </motion.div>
         )}
       </AnimatePresence>
+=======
+        </div>
+      )}
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     </header>
   );
 };

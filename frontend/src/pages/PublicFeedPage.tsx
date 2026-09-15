@@ -337,11 +337,19 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
                 id={`complaint-card-${complaint._id}`}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
+<<<<<<< HEAD
                 transition={{ delay: Math.min(idx * 0.035, 0.35), duration: 0.28, ease: 'easeOut' }}
                 whileHover={{ y: -6, borderColor: '#c9a227', boxShadow: '0 14px 28px -6px rgba(11, 61, 44, 0.12), 0 4px 14px rgba(201, 162, 39, 0.15)' }}
                 whileTap={{ scale: 0.985 }}
                 onClick={() => navigate(`/complaints/${complaint._id}`)}
                 className="p-5 rounded-2xl bg-white/95 backdrop-blur-xs border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
+=======
+                transition={{ delay: Math.min(idx * 0.035, 0.35), duration: 0.22 }}
+                whileHover={{ y: -4, borderColor: '#08D9D6', boxShadow: '0 8px 24px rgba(8,217,214,0.12)' }}
+                whileTap={{ scale: 0.99 }}
+                onClick={() => navigate(`/complaints/${complaint._id}`)}
+                className="p-5 rounded-2xl bg-white border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">

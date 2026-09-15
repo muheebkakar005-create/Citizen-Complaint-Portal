@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 export type UserRole = 'citizen' | 'officer' | 'admin';
+=======
+export type UserRole = 'citizen' | 'officer';
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
 export interface User {
   id: string;

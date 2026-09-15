@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { Logo } from '../components/Logo';
@@ -27,8 +30,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
         login(res.token, res.user);
         if (res.user.role === 'officer') {
           navigate('/officer/dashboard');
+<<<<<<< HEAD
         } else if (res.user.role === 'admin') {
           navigate('/admin/dashboard');
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         } else {
           navigate('/dashboard');
         }
@@ -54,8 +60,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
         login(res.token, res.user);
         if (res.user.role === 'officer') {
           navigate('/officer/dashboard');
+<<<<<<< HEAD
         } else if (res.user.role === 'admin') {
           navigate('/admin/dashboard');
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         } else {
           navigate('/dashboard');
         }
@@ -71,30 +80,47 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
 
   return (
     <div className="max-w-md mx-auto py-12 px-4 font-sans">
+<<<<<<< HEAD
       <motion.div
         initial={{ opacity: 0, y: 18, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         className="bg-white/95 backdrop-blur-md p-8 rounded-3xl border border-brand-gold/30 shadow-2xl space-y-6"
       >
+=======
+      <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         {/* Header with Official Emblem */}
         <div className="text-center space-y-3">
           <div className="flex justify-center">
             <Logo size="md" />
           </div>
+<<<<<<< HEAD
           <h1 className="text-lg font-bold text-slate-900 uppercase tracking-tight">Sign In</h1>
           <p className="text-xs text-slate-500">
             Citizen, Officer &amp; Administrator login &mdash; Citizen Complaint Portal, Government of Balochistan
+=======
+          <h1 className="text-lg font-bold text-slate-900 uppercase tracking-tight">System Authentication Terminal</h1>
+          <p className="text-xs text-slate-500 font-mono">
+            Citizen telemetry credentials & district officer console login
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </p>
         </div>
 
         {/* Demo Fast Logins */}
         <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
           <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-600">
+<<<<<<< HEAD
             <Sparkles size={12} className="text-brand-green" />
             <span>Fast Evaluation Credentials:</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+=======
+            <Sparkles size={12} className="text-teal-700" />
+            <span>Fast Evaluation Credentials:</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             <button
               id="quick-login-citizen-btn"
               type="button"
@@ -102,12 +128,17 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
               disabled={submitting}
               className="px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-lg bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
+<<<<<<< HEAD
               <User size={12} className="text-brand-green" />
+=======
+              <User size={12} className="text-teal-700" />
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               <span>Citizen Demo</span>
             </button>
             <button
               id="quick-login-officer-btn"
               type="button"
+<<<<<<< HEAD
               onClick={() => handleQuickLogin('officer@civicportal.gov', 'Officer@123')}
               disabled={submitting}
               className="px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-lg bg-brand-dark hover:bg-slate-800 text-brand-gold border border-brand-gold/40 shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
@@ -125,6 +156,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
               <ShieldCheck size={12} className="text-brand-gold-light" />
               <span>Admin Demo</span>
             </button>
+=======
+              onClick={() => handleQuickLogin('officer@citygov.gov', 'Officer@123')}
+              disabled={submitting}
+              className="px-3 py-2 text-xs font-bold uppercase tracking-wider rounded-lg bg-brand-dark hover:bg-slate-800 text-brand-cyan border border-brand-cyan/40 shadow-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <Building2 size={12} className="text-brand-cyan" />
+              <span>Officer Demo</span>
+            </button>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </div>
         </div>
 
@@ -172,24 +212,42 @@ export const LoginPage: React.FC<LoginPageProps> = ({ navigate }) => {
             id="login-submit-btn"
             type="submit"
             disabled={submitting}
+<<<<<<< HEAD
             className="w-full py-2.5 px-4 rounded-full bg-brand-cyan hover:bg-brand-gold-light text-brand-dark font-black text-xs uppercase tracking-wider shadow-md hover:shadow-amber-500/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
           >
             <LogIn size={14} />
             <span>{submitting ? 'Signing In...' : 'Sign In'}</span>
+=======
+            className="w-full py-2.5 px-4 rounded-full bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark font-black text-xs uppercase tracking-wider shadow-md hover:shadow-cyan-500/20 flex items-center justify-center gap-2 transition-all disabled:opacity-60 cursor-pointer"
+          >
+            <LogIn size={14} />
+            <span>{submitting ? 'Verifying...' : 'Authenticate'}</span>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </button>
         </form>
 
         {/* Register Prompt */}
         <div className="text-center pt-2 border-t border-slate-100 text-xs text-slate-500">
+<<<<<<< HEAD
           <span>New here? </span>
+=======
+          <span>New citizen resident? </span>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           <button
             onClick={() => navigate('/signup')}
             className="font-bold text-teal-700 hover:text-brand-pink uppercase tracking-wider cursor-pointer"
           >
+<<<<<<< HEAD
             Create an Account
           </button>
         </div>
       </motion.div>
+=======
+            Register Account
+          </button>
+        </div>
+      </div>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     </div>
   );
 };

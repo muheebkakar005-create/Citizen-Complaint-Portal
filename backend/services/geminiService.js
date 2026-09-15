@@ -9,6 +9,7 @@ const SYSTEM_INSTRUCTION =
   'critical issues, overdue complaints, emerging hotspots, and recent resolutions. ' +
   'Do not invent information.';
 
+<<<<<<< HEAD
 const COMPLAINT_SUMMARY_SYSTEM_INSTRUCTION =
   'You are an assistant for a government officer or administrator reviewing a single ' +
   'citizen complaint. Given the complaint details as JSON, write a short, plain-English ' +
@@ -16,6 +17,8 @@ const COMPLAINT_SUMMARY_SYSTEM_INSTRUCTION =
   '(based on priority, age, and upvotes), and (3) one concrete suggested next action for ' +
   'the assigned team. Keep it under 80 words total. Do not invent facts not present in the data.';
 
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 /**
  * Builds a deterministic, purely local summary from the stats object.
  * Used whenever Gemini is unavailable (no API key, network error, quota,
@@ -98,6 +101,7 @@ async function generateOfficerBriefing(stats) {
   }
 }
 
+<<<<<<< HEAD
 /**
  * Builds a deterministic, purely local summary for a single complaint.
  * Used whenever Gemini is unavailable so the summarizer form never breaks.
@@ -195,3 +199,6 @@ module.exports = {
   generateComplaintSummary,
   buildFallbackComplaintSummary,
 };
+=======
+module.exports = { generateOfficerBriefing, buildFallbackSummary };
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32

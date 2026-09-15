@@ -29,6 +29,7 @@ export const Logo: React.FC<LogoProps> = ({
         whileHover={{ scale: 1.06, rotate: [-1, 1, 0] }}
         whileTap={{ scale: 0.96 }}
         transition={{ type: 'spring', stiffness: 350, damping: 20 }}
+<<<<<<< HEAD
         className={`${currentSize.img} rounded-full bg-white p-1 flex items-center justify-center border-2 border-brand-gold/70 shadow-sm overflow-hidden flex-shrink-0 group hover:border-brand-gold transition-colors cursor-pointer`}
       >
         <img
@@ -36,15 +37,30 @@ export const Logo: React.FC<LogoProps> = ({
           alt="Citizen Complaint Portal - Government of Balochistan Official Seal"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain rounded-full"
+=======
+        className={`${currentSize.img} rounded-xl bg-white p-1 flex items-center justify-center border border-brand-cyan/40 shadow-sm overflow-hidden flex-shrink-0 group hover:border-brand-pink transition-colors cursor-pointer`}
+      >
+        <img
+          src="/logo.jpg"
+          alt="Citizen Complaint Official Logo"
+          referrerPolicy="no-referrer"
+          className="w-full h-full object-contain rounded-lg"
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           onError={(e) => {
             // High quality fallback vector emblem if image loading fails
             const target = e.currentTarget;
             target.style.display = 'none';
             if (target.parentElement) {
               target.parentElement.innerHTML = `
+<<<<<<< HEAD
                 <div class="w-full h-full flex flex-col items-center justify-center text-brand-dark font-serif">
                   <span class="text-[9px] font-bold tracking-tighter">CCP</span>
                   <svg class="w-5 h-5 text-brand-green" viewBox="0 0 24 24" fill="currentColor">
+=======
+                <div class="w-full h-full flex flex-col items-center justify-center text-slate-900 font-serif">
+                  <span class="text-[9px] font-bold tracking-tighter">CITIZEN</span>
+                  <svg class="w-5 h-5 text-teal-600" viewBox="0 0 24 24" fill="currentColor">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                     <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
                   </svg>
                 </div>
@@ -61,6 +77,7 @@ export const Logo: React.FC<LogoProps> = ({
               className={`font-serif font-bold tracking-tight text-white ${currentSize.text} capitalize`}
               style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
             >
+<<<<<<< HEAD
               Citizen Complaint
             </span>
             <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-brand-gold text-brand-dark uppercase tracking-wider">
@@ -69,6 +86,16 @@ export const Logo: React.FC<LogoProps> = ({
           </div>
           <span className={`text-brand-gold-light font-sans tracking-wide font-semibold ${currentSize.sub}`}>
             Government of Balochistan
+=======
+              Citezan Complent
+            </span>
+            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-brand-pink text-white uppercase tracking-wider">
+              Portal
+            </span>
+          </div>
+          <span className={`text-brand-cyan font-mono tracking-wider uppercase font-semibold ${currentSize.sub}`}>
+            Civic Grievance & Incident Grid
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </span>
         </div>
       )}

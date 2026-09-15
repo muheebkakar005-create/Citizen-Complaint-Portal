@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { motion } from 'motion/react';
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { Complaint } from '../types';
@@ -65,6 +68,7 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
   return (
     <div className="space-y-6 py-6 font-sans">
       {/* Welcome Technical Banner */}
+<<<<<<< HEAD
       <motion.div
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
@@ -73,6 +77,11 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
       >
         <div className="space-y-2 relative z-10">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-brand-gold text-brand-dark text-[10px] font-black uppercase tracking-wider shadow-xs">
+=======
+      <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-6 sm:p-7 border border-slate-800 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="space-y-2 relative z-10">
+          <div className="inline-flex items-center gap-2 px-2 py-0.5 rounded bg-teal-400 text-slate-900 text-[10px] font-black uppercase tracking-wider">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             <span>Verified Citizen Account</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
@@ -85,6 +94,7 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
 
         {/* Quick Actions in Technical Theme */}
         <div className="flex flex-wrap items-center gap-3 relative z-10">
+<<<<<<< HEAD
           <motion.button
             id="dashboard-report-btn"
             whileHover={{ scale: 1.04, y: -2 }}
@@ -130,6 +140,43 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
           animate={{ opacity: 1, scale: 1 }}
           className="p-4 rounded-2xl bg-amber-50/95 backdrop-blur-xs border border-amber-200 text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs"
         >
+=======
+          <button
+            id="dashboard-report-btn"
+            onClick={() => navigate('/complaints/new')}
+            className="px-4 py-2 rounded-full bg-teal-500 hover:bg-teal-400 text-slate-950 text-xs font-bold uppercase tracking-wider shadow flex items-center gap-2 transition-colors"
+          >
+            <FilePlus2 size={15} />
+            <span>Report Incident</span>
+          </button>
+          <button
+            id="dashboard-my-complaints-btn"
+            onClick={() => navigate('/complaints/mine')}
+            className="px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 flex items-center gap-2 transition-colors"
+          >
+            <ListTodo size={15} />
+            <span>My Records ({total})</span>
+          </button>
+          <button
+            id="dashboard-browse-btn"
+            onClick={() => navigate('/complaints')}
+            className="px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 flex items-center gap-2 transition-colors"
+          >
+            <Compass size={15} className="text-teal-400" />
+            <span>Incident Feed</span>
+          </button>
+        </div>
+
+        {/* Decorative backdrop symbol */}
+        <svg className="absolute right-[-10px] bottom-[-10px] w-40 h-40 opacity-10 text-white pointer-events-none" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z"></path>
+        </svg>
+      </div>
+
+      {/* Pending Citizen Feedback Banner */}
+      {pendingFeedbackList.length > 0 && (
+        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
               <Star size={18} className="fill-amber-500 text-amber-500" />
@@ -145,15 +192,24 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
           </div>
           <button
             onClick={() => navigate(`/complaints/${pendingFeedbackList[0]._id}`)}
+<<<<<<< HEAD
             className="px-4 py-1.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-wider shrink-0 transition-colors cursor-pointer"
           >
             Rate Resolution
           </button>
         </motion.div>
+=======
+            className="px-4 py-1.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold uppercase tracking-wider shrink-0 transition-colors"
+          >
+            Rate Resolution
+          </button>
+        </div>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       )}
 
       {/* Statistics Cards - Technical Grid Style */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<<<<<<< HEAD
         {[
           { label: 'Total Filed', val: total, sub: 'Resident incident logs', color: 'text-slate-900', subColor: 'text-slate-400' },
           { label: 'Pending Review', val: pending, sub: 'Awaiting assignment', color: 'text-amber-600', subColor: 'text-amber-500' },
@@ -173,6 +229,31 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
             <div className={`text-[10px] font-medium mt-0.5 ${item.subColor}`}>{item.sub}</div>
           </motion.div>
         ))}
+=======
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+          <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Total Filed</div>
+          <div className="text-2xl font-bold text-slate-900">{total}</div>
+          <div className="text-[10px] text-slate-400 font-mono mt-0.5">Resident incident logs</div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+          <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Pending Review</div>
+          <div className="text-2xl font-bold text-amber-600">{pending}</div>
+          <div className="text-[10px] text-amber-500 font-medium mt-0.5">Awaiting assignment</div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+          <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">In Progress</div>
+          <div className="text-2xl font-bold text-indigo-600">{inProgress}</div>
+          <div className="text-[10px] text-indigo-500 font-medium mt-0.5">Active crew dispatch</div>
+        </div>
+
+        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
+          <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Resolved</div>
+          <div className="text-2xl font-bold text-emerald-600">{resolved}</div>
+          <div className="text-[10px] text-emerald-500 font-medium mt-0.5">Repairs completed</div>
+        </div>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       </div>
 
       {/* Your Recent Filed Complaints Data Grid */}
@@ -215,6 +296,7 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
           </div>
         ) : (
           <div className="space-y-3">
+<<<<<<< HEAD
             {myComplaints.slice(0, 5).map((complaint, idx) => (
               <motion.div
                 key={complaint._id}
@@ -224,6 +306,13 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
                 whileHover={{ x: 4, borderColor: '#c9a227', boxShadow: '0 8px 20px -4px rgba(11, 61, 44, 0.08)' }}
                 onClick={() => navigate(`/complaints/${complaint._id}`)}
                 className="p-4 rounded-xl bg-white/90 hover:bg-white border border-slate-200 transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+=======
+            {myComplaints.slice(0, 5).map(complaint => (
+              <div
+                key={complaint._id}
+                onClick={() => navigate(`/complaints/${complaint._id}`)}
+                className="p-4 rounded-xl bg-slate-50/60 hover:bg-white border border-slate-200 hover:border-teal-500/50 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               >
                 <div className="space-y-1.5 max-w-2xl">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -275,7 +364,11 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
                     <ArrowRight size={12} />
                   </span>
                 </div>
+<<<<<<< HEAD
               </motion.div>
+=======
+              </div>
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             ))}
           </div>
         )}

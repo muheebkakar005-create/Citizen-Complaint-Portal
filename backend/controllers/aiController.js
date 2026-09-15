@@ -1,8 +1,13 @@
 const asyncHandler = require('express-async-handler');
 const Complaint = require('../models/Complaint');
+<<<<<<< HEAD
 const ApiError = require('../utils/ApiError');
 const { withPriority } = require('../utils/priorityCalculator');
 const { generateOfficerBriefing, generateComplaintSummary } = require('../services/geminiService');
+=======
+const { withPriority } = require('../utils/priorityCalculator');
+const { generateOfficerBriefing } = require('../services/geminiService');
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
 /**
  * Aggregates the raw statistics needed for both the officer dashboard cards
@@ -120,6 +125,7 @@ const getOfficerSummary = asyncHandler(async (req, res) => {
   });
 });
 
+<<<<<<< HEAD
 /**
  * @route   GET /api/ai/complaints/:id/summary
  * @desc    Generates a short AI summary/briefing for a single complaint,
@@ -146,3 +152,6 @@ const getComplaintSummary = asyncHandler(async (req, res) => {
 });
 
 module.exports = { getOfficerSummary, getDashboardStats, getComplaintSummary, aggregateStats };
+=======
+module.exports = { getOfficerSummary, getDashboardStats, aggregateStats };
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32

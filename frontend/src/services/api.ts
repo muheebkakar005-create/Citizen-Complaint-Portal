@@ -1,6 +1,10 @@
 import { Complaint, ComplaintFilters, OfficerStats, SatisfactionStats, User } from '../types';
+<<<<<<< HEAD
 
 const API_BASE = '/api';
+=======
+const API_BASE = `${import.meta.env.VITE_API_URL}/api`;
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('token');
@@ -148,6 +152,7 @@ export const api = {
     return res.json();
   },
 
+<<<<<<< HEAD
   async getComplaintSummary(id: string): Promise<{
     success: boolean;
     summary: string;
@@ -161,6 +166,8 @@ export const api = {
     return res.json();
   },
 
+=======
+>>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   async getSatisfactionStats(): Promise<{
     success: boolean;
     averageSatisfaction: number;

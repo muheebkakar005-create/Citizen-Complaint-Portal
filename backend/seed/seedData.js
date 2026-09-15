@@ -9,7 +9,6 @@ const officer = {
   role: 'officer',
 };
 
-<<<<<<< HEAD
 const admin = {
   name: 'Admin Sana Baloch',
   email: 'admin@civicportal.gov',
@@ -17,8 +16,6 @@ const admin = {
   role: 'admin',
 };
 
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 const citizens = [
   { name: 'Ayesha Khan', email: 'ayesha@example.com', password: 'Citizen@123', role: 'citizen' },
   { name: 'Bilal Ahmed', email: 'bilal@example.com', password: 'Citizen@123', role: 'citizen' },
@@ -226,8 +223,4 @@ const complaintTemplates = [
   },
 ];
 
-<<<<<<< HEAD
 module.exports = { officer, admin, citizens, complaintTemplates };
-=======
-module.exports = { officer, citizens, complaintTemplates };
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32

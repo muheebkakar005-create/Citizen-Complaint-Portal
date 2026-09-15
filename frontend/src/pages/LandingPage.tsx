@@ -7,7 +7,6 @@ import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
 import { Logo } from '../components/Logo';
 import {
-<<<<<<< HEAD
   ArrowRight,
   FilePlus2,
   Compass,
@@ -15,16 +14,6 @@ import {
   MessageSquare,
   ShieldCheck,
   Users,
-=======
-  ShieldAlert,
-  ArrowRight,
-  FilePlus2,
-  Compass,
-  CheckCircle2,
-  TrendingUp,
-  MessageSquare,
-  Building,
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   ThumbsUp,
   MapPin,
   Calendar
@@ -67,16 +56,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
 
   return (
     <div className="w-full space-y-10 py-6 font-sans">
-<<<<<<< HEAD
       {/* Hero Section - Government of Balochistan brand with responsive background */}
-=======
-      {/* Hero Section - Technical Brand Dark Theme Full Width */}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       <motion.section
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: 'easeOut' }}
-<<<<<<< HEAD
         className="relative overflow-hidden rounded-3xl text-brand-dark p-6 sm:p-10 lg:p-14 shadow-2xl border border-brand-gold/30 bg-brand-cream/80 min-h-[480px] lg:min-h-[520px] flex items-center"
       >
         {/* Responsive Background Layer: Mobile = bg-mobile.jpg ONLY, PC = bg-pc.jpg */}
@@ -97,16 +81,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10 w-full">
-=======
-        className="relative overflow-hidden rounded-2xl bg-brand-dark text-white p-6 sm:p-10 lg:p-12 shadow-xl border border-slate-700"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.08, ease: 'easeOut' }}
-<<<<<<< HEAD
             className="lg:col-span-7 space-y-5 bg-white/80 sm:bg-white/70 md:bg-white/80 lg:bg-transparent backdrop-blur-xs md:backdrop-blur-none p-5 sm:p-6 md:p-6 lg:p-0 rounded-2xl lg:rounded-none border border-white/60 lg:border-0 shadow-sm lg:shadow-none"
           >
             {/* Tagline strip */}
@@ -129,36 +107,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
 
             <p className="text-sm sm:text-base text-slate-700 leading-relaxed max-w-xl font-medium">
               Help us build a better Balochistan by reporting issues, tracking their progress in real-time, and being part of the change in your community.
-=======
-            className="lg:col-span-8 space-y-5"
-          >
-            {/* Prominent Emblem / Identity Banner */}
-            <div className="flex flex-wrap items-center gap-3">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-cyan/15 border border-brand-cyan/30 text-brand-cyan text-xs font-mono uppercase tracking-wider"
-              >
-                <ShieldAlert size={14} className="text-brand-cyan" />
-                <span>Civic Incident Grid & Operations Infrastructure</span>
-              </motion.div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-pink/15 border border-brand-pink/30 text-brand-pink text-[11px] font-mono font-bold uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-pink animate-ping"></span>
-                <span>District Node Live</span>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12]">
-                Report. <span className="text-brand-cyan">Prioritize.</span> <span className="text-brand-pink">Resolve.</span>
-              </h1>
-              <p className="text-xs sm:text-sm font-mono text-slate-400">
-                Official Municipal Civic Grievance & Public Redressal Network
-              </p>
-            </div>
-
-            <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-2xl">
-              A high-fidelity civic telemetry platform where residents register local infrastructure problems, duplicate detections avoid wasted municipal resources, and AI daily briefings optimize field crew dispatch.
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -167,18 +115,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => navigate(user ? '/complaints/new' : '/login')}
-<<<<<<< HEAD
                 className="px-6 py-3 rounded-full bg-brand-green-deep hover:bg-brand-green text-white font-bold text-xs sm:text-sm uppercase tracking-wider shadow-lg flex items-center gap-2 transition-all cursor-pointer"
               >
                 <FilePlus2 size={16} />
                 <span>Report a Complaint</span>
                 <ArrowRight size={14} />
-=======
-                className="px-6 py-3 rounded-full bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark font-black text-xs uppercase tracking-wider shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2 transition-all cursor-pointer"
-              >
-                <FilePlus2 size={16} />
-                <span>Report Incident</span>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               </motion.button>
 
               <motion.button
@@ -186,17 +127,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => navigate('/complaints')}
-<<<<<<< HEAD
                 className="px-6 py-3 rounded-full bg-white hover:bg-brand-green/5 text-brand-green font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-brand-green shadow-sm flex items-center gap-2 transition-all cursor-pointer"
               >
                 <Search size={16} />
                 <span>Track Your Complaint</span>
-=======
-                className="px-6 py-3 rounded-full bg-slate-800 hover:bg-slate-700 text-brand-light font-semibold text-xs uppercase tracking-wider border border-slate-600 hover:border-brand-cyan shadow-sm flex items-center gap-2 transition-all cursor-pointer"
-              >
-                <Compass size={16} className="text-brand-cyan" />
-                <span>Explore Incident Grid</span>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               </motion.button>
 
               {!user && (
@@ -205,11 +139,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={() => navigate('/login')}
-<<<<<<< HEAD
                   className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-brand-green hover:text-brand-green-deep transition-colors cursor-pointer bg-white/70 hover:bg-white rounded-full border border-brand-green/30 shadow-xs"
-=======
-                  className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-brand-cyan transition-colors cursor-pointer"
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                 >
                   Sign In
                 </motion.button>
@@ -217,7 +147,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
             </div>
           </motion.div>
 
-<<<<<<< HEAD
           {/* Right Column: Emblem showcase framing the Assembly architecture */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -281,113 +210,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
             </motion.div>
           ))}
         </div>
-=======
-          {/* Right Column: Live Civic Telemetry Widget with Official Emblem */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.45, delay: 0.15, ease: 'easeOut' }}
-            whileHover={{ y: -3 }}
-            className="lg:col-span-4 w-full bg-slate-900/90 border border-slate-700/90 rounded-xl p-5 font-mono text-xs text-slate-300 space-y-4 shadow-2xl transition-shadow"
-          >
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2">
-                <Logo size="sm" showText={false} />
-                <span className="text-brand-cyan font-bold tracking-widest text-[11px] uppercase">Telemetry Status</span>
-              </div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] text-emerald-400 font-bold">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                ACTIVE
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-slate-800/80 p-3 rounded border border-slate-700">
-                <p className="text-[10px] text-slate-400 uppercase">Avg SLA</p>
-                <p className="text-lg font-bold text-white">48h</p>
-                <p className="text-[9px] text-emerald-400">92% On-Target</p>
-              </div>
-              <div className="bg-slate-800/80 p-3 rounded border border-slate-700">
-                <p className="text-[10px] text-slate-400 uppercase">AI Triage</p>
-                <p className="text-lg font-bold text-brand-cyan">Automated</p>
-                <p className="text-[9px] text-slate-400">Dynamic Score</p>
-              </div>
-              <div className="bg-slate-800/80 p-3 rounded border border-slate-700">
-                <p className="text-[10px] text-slate-400 uppercase">Deduplication</p>
-                <p className="text-lg font-bold text-white">100%</p>
-                <p className="text-[9px] text-slate-400">Ward Matching</p>
-              </div>
-              <div className="bg-slate-800/80 p-3 rounded border border-slate-700">
-                <p className="text-[10px] text-slate-400 uppercase">Escalation</p>
-                <p className="text-lg font-bold text-brand-pink">Priority-Based</p>
-                <p className="text-[9px] text-brand-cyan font-semibold">Citizen Upvotes</p>
-              </div>
-            </div>
-
-            <div className="pt-2 text-[10px] text-slate-400 flex items-center justify-between border-t border-slate-800">
-              <span className="text-slate-300">District Protocol v2.4</span>
-              <span className="text-brand-cyan font-semibold">Officer Auto-Briefing</span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Decorative backdrop symbol */}
-        <div className="absolute right-[-40px] bottom-[-40px] opacity-10 pointer-events-none">
-          <Logo size="lg" showText={false} />
-        </div>
-      </motion.section>
-
-      {/* 4 Feature Points - Technical Grid Style */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          {
-            tag: 'Duplicate Engine',
-            title: 'Ward Deduplication',
-            desc: 'Real-time clustering alerts users if a pothole or streetlight issue in their ward has already been reported.'
-          },
-          {
-            tag: 'Priority Scoring',
-            title: 'Dynamic Priority Formula',
-            desc: 'Formula (Upvotes × 2) + Days ensures aging issues and heavily-backed incidents naturally escalate.'
-          },
-          {
-            tag: 'AI Synthesis',
-            title: 'Officer Daily Briefings',
-            desc: 'Automated Gemini 2.5 summaries isolate emergency hotspots, workload bottlenecks, and district metrics.'
-          },
-          {
-            tag: 'Accountability',
-            title: '5-Star Feedback Loop',
-            desc: 'Citizens rate repair quality directly, holding municipal agencies accountable to public satisfaction scores.'
-          }
-        ].map((feat, idx) => (
-          <motion.div
-            key={feat.title}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + idx * 0.06, duration: 0.3 }}
-            whileHover={{ y: -5, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.08)' }}
-            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-2 cursor-default transition-colors"
-          >
-            <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">{feat.tag}</div>
-            <p className="text-sm font-bold text-slate-900">{feat.title}</p>
-            <p className="text-xs text-slate-500 leading-relaxed">{feat.desc}</p>
-          </motion.div>
-        ))}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       </section>
 
       {/* Recent Complaints Preview Data Grid */}
       <section className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-<<<<<<< HEAD
             <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Recent Complaints</h2>
             <p className="text-xs text-slate-400">Live feed of citizen complaints across Balochistan</p>
-=======
-            <h2 className="text-sm font-bold text-slate-800 uppercase tracking-wider">Recent Community Incidents</h2>
-            <p className="text-xs text-slate-400 font-mono">Live feed of citizen tickets across municipal wards</p>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           </div>
           <motion.button
             id="view-all-complaints-btn"
@@ -396,11 +226,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
             onClick={() => navigate('/complaints')}
             className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-teal-700 hover:text-brand-dark transition-colors cursor-pointer"
           >
-<<<<<<< HEAD
             <span>View Public Feed</span>
-=======
-            <span>View Public Registry</span>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             <ArrowRight size={13} />
           </motion.button>
         </div>
@@ -423,19 +249,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                 id={`recent-complaint-${complaint._id}`}
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-<<<<<<< HEAD
                 transition={{ delay: idx * 0.04, duration: 0.28, ease: 'easeOut' }}
                 whileHover={{ y: -6, borderColor: '#c9a227', boxShadow: '0 14px 30px -8px rgba(11, 61, 44, 0.12), 0 4px 14px rgba(201, 162, 39, 0.15)' }}
                 whileTap={{ scale: 0.985 }}
                 onClick={() => navigate(`/complaints/${complaint._id}`)}
                 className="p-5 rounded-2xl bg-white/95 backdrop-blur-xs border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-3 group"
-=======
-                transition={{ delay: idx * 0.04, duration: 0.25 }}
-                whileHover={{ y: -5, borderColor: '#08D9D6', boxShadow: '0 8px 24px rgba(8,217,214,0.12)' }}
-                whileTap={{ scale: 0.99 }}
-                onClick={() => navigate(`/complaints/${complaint._id}`)}
-                className="p-5 rounded-2xl bg-white border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-3 group"
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -472,7 +290,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                     </span>
                   </div>
 
-<<<<<<< HEAD
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.88 }}
@@ -481,12 +298,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
                     <ThumbsUp size={11} className="text-teal-700" />
                     <span>{complaint.upvotes}</span>
                   </motion.div>
-=======
-                  <div className="inline-flex items-center gap-1 font-bold text-slate-900 bg-brand-cyan/20 border border-brand-cyan/40 px-2.5 py-0.5 rounded-full text-xs font-mono">
-                    <ThumbsUp size={11} className="text-teal-700" />
-                    <span>{complaint.upvotes}</span>
-                  </div>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                 </div>
               </motion.div>
             ))}
@@ -515,11 +326,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ navigate }) => {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
           onClick={() => navigate('/login')}
-<<<<<<< HEAD
           className="px-5 py-2.5 rounded-full bg-brand-cyan hover:bg-brand-gold-light text-brand-dark font-extrabold text-xs uppercase tracking-wider transition-colors shrink-0 shadow-md cursor-pointer"
-=======
-          className="px-5 py-2.5 rounded-full bg-brand-cyan hover:bg-[#00c2bf] text-brand-dark font-extrabold text-xs uppercase tracking-wider transition-colors shrink-0 shadow-md cursor-pointer"
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         >
           Open Sign In
         </motion.button>

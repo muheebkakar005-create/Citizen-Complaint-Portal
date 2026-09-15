@@ -15,24 +15,16 @@ import {
 
 interface OfficerDashboardProps {
   navigate: (path: string) => void;
-<<<<<<< HEAD
   portalRole?: 'officer' | 'admin';
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 }
 
 const CATEGORIES: ('All' | ComplaintCategory)[] = ['All', 'Road', 'Garbage', 'Water', 'Electricity', 'Other'];
 const STATUSES: ('All' | ComplaintStatus)[] = ['All', 'pending', 'in-progress', 'resolved'];
 const PRIORITIES: ('All' | PriorityLevel)[] = ['All', 'CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
 
-<<<<<<< HEAD
 export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, portalRole = 'officer' }) => {
   const { user } = useAuth();
   const reviewBasePath = portalRole === 'admin' ? '/admin/complaints' : '/officer/complaints';
-=======
-export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) => {
-  const { user } = useAuth();
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 
   // State
   const [complaints, setComplaints] = useState<Complaint[]>([]);
@@ -172,7 +164,6 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) 
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-base sm:text-lg font-bold text-slate-800 uppercase tracking-tight">
-<<<<<<< HEAD
                 {portalRole === 'admin' ? 'Administrator Console' : 'Complaint Oversight'}
               </h1>
               <span className="text-slate-400">/</span>
@@ -182,15 +173,6 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) 
             </div>
             <p className="text-[11px] text-slate-400 font-medium">
               {portalRole === 'admin' ? 'Administrator' : 'Active Officer'}: <span className="text-slate-700 font-semibold">{user?.name || 'Chief Officer'}</span>
-=======
-                Complaint Oversight
-              </h1>
-              <span className="text-slate-400">/</span>
-              <span className="text-xs sm:text-sm text-slate-500 font-mono">District Operations Monitor</span>
-            </div>
-            <p className="text-[11px] text-slate-400 font-medium">
-              Active Officer: <span className="text-slate-700 font-semibold">{user?.name || 'Chief Officer'}</span> (Admin/District-HQ)
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             </p>
           </div>
         </div>
@@ -382,11 +364,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) 
                   </p>
                 </div>
                 <button
-<<<<<<< HEAD
                   onClick={() => navigate(`${reviewBasePath}/${item._id}`)}
-=======
-                  onClick={() => navigate(`/officer/complaints/${item._id}`)}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                   className="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-full text-xs font-bold uppercase tracking-wider shrink-0 shadow-xs"
                 >
                   Inspect Ticket
@@ -480,11 +458,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) 
                 complaints.map(c => (
                   <tr
                     key={c._id}
-<<<<<<< HEAD
                     onClick={() => navigate(`${reviewBasePath}/${c._id}`)}
-=======
-                    onClick={() => navigate(`/officer/complaints/${c._id}`)}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                     className="hover:bg-slate-50 transition-colors cursor-pointer group"
                   >
                     <td className="px-6 py-4 text-xs font-mono text-slate-400 whitespace-nowrap">
@@ -519,11 +493,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate }) 
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap" onClick={e => e.stopPropagation()}>
                       <button
-<<<<<<< HEAD
                         onClick={() => navigate(`${reviewBasePath}/${c._id}`)}
-=======
-                        onClick={() => navigate(`/officer/complaints/${c._id}`)}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
                         className="text-[10px] font-black uppercase text-teal-600 hover:text-teal-800 tracking-wider transition-colors"
                       >
                         Manage

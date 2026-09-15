@@ -15,10 +15,7 @@ import { PublicFeedPage } from './pages/PublicFeedPage';
 import { ComplaintDetailsPage } from './pages/ComplaintDetailsPage';
 import { OfficerDashboard } from './pages/OfficerDashboard';
 import { OfficerReviewPage } from './pages/OfficerReviewPage';
-<<<<<<< HEAD
 import { AdminDashboard } from './pages/AdminDashboard';
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
 import { ShieldAlert } from 'lucide-react';
 
 function AppContent() {
@@ -79,12 +76,9 @@ function AppContent() {
       if (user.role === 'officer') {
         return <OfficerDashboard navigate={navigate} />;
       }
-<<<<<<< HEAD
       if (user.role === 'admin') {
         return <AdminDashboard navigate={navigate} />;
       }
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       return <CitizenDashboard navigate={navigate} />;
     }
 
@@ -137,11 +131,7 @@ function AppContent() {
       if (!user) {
         return <LoginPage navigate={navigate} />;
       }
-<<<<<<< HEAD
       if (user.role !== 'officer' && user.role !== 'admin') {
-=======
-      if (user.role !== 'officer') {
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         return (
           <div className="max-w-md mx-auto my-16 p-8 bg-white rounded-2xl border border-slate-200 text-center space-y-4 shadow">
             <ShieldAlert size={32} className="mx-auto text-rose-600" />
@@ -158,7 +148,6 @@ function AppContent() {
       return <OfficerReviewPage id={complaintId} navigate={navigate} />;
     }
 
-<<<<<<< HEAD
     // 8b. Admin Dashboard
     if (currentPath === '/admin/dashboard' || currentPath === '/admin') {
       if (!user) {
@@ -209,8 +198,6 @@ function AppContent() {
       return <OfficerReviewPage id={complaintId} navigate={navigate} portalRole="admin" />;
     }
 
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     // 9. Single Complaint Details (/complaints/:id)
     if (currentPath.startsWith('/complaints/')) {
       const complaintId = currentPath.replace('/complaints/', '').trim();
@@ -222,7 +209,6 @@ function AppContent() {
   };
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen flex flex-col bg-brand-light text-brand-dark font-sans antialiased selection:bg-brand-cyan selection:text-brand-dark relative">
       {/* Responsive Background Layer: Mobile pic for mobile UI (< md), PC pic for PC UI (>= md) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
@@ -249,18 +235,6 @@ function AppContent() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-=======
-    <div className="min-h-screen flex flex-col bg-brand-light text-brand-dark font-sans antialiased selection:bg-brand-cyan selection:text-brand-dark">
-      <Navbar currentPath={currentPath} navigate={navigate} />
-      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentPath}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
             className="w-full"
           >
             {renderRoute()}

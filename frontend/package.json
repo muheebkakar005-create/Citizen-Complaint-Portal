@@ -10,10 +10,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
     "framer-motion": "^13.2.0",
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "react": "^19.0.1",

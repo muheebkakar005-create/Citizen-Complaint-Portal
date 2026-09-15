@@ -28,18 +28,12 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, size = 'md' })
       return (
         <span
           id={`badge-status-${status}`}
-<<<<<<< HEAD
           className={`inline-flex items-center rounded-full bg-indigo-50/90 text-indigo-700 border border-indigo-200/80 ${sizeClasses[size]}`}
         >
           <span className="relative flex h-2 w-2 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
           </span>
-=======
-          className={`inline-flex items-center rounded-full bg-indigo-50/80 text-indigo-700 border border-indigo-200/70 ${sizeClasses[size]}`}
-        >
-          <span className="w-2 h-2 rounded-full bg-indigo-500 shrink-0"></span>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
           <span>In Progress</span>
         </span>
       );

@@ -16,10 +16,7 @@ import {
   Save,
   MessageSquare,
   ShieldCheck,
-<<<<<<< HEAD
   Sparkles,
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   Star,
   Trash2
 } from 'lucide-react';
@@ -27,17 +24,11 @@ import {
 interface OfficerReviewPageProps {
   id: string;
   navigate: (path: string) => void;
-<<<<<<< HEAD
   portalRole?: 'officer' | 'admin';
 }
 
 export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, navigate, portalRole = 'officer' }) => {
   const dashboardPath = portalRole === 'admin' ? '/admin/dashboard' : '/officer/dashboard';
-=======
-}
-
-export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, navigate }) => {
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   const [complaint, setComplaint] = useState<Complaint | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -48,15 +39,12 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-<<<<<<< HEAD
   // AI complaint summarizer state
   const [aiSummary, setAiSummary] = useState<string>('');
   const [aiIsGenerated, setAiIsGenerated] = useState<boolean>(false);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
 
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   useEffect(() => {
     let mounted = true;
     setLoading(true);
@@ -105,7 +93,6 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
     }
   };
 
-<<<<<<< HEAD
   const handleSummarize = async () => {
     if (!complaint) return;
     setAiLoading(true);
@@ -125,8 +112,6 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
     }
   };
 
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
   const formatTicketId = (rawId: string) => {
     if (rawId.startsWith('cmp_')) {
       const num = rawId.replace('cmp_', '');
@@ -150,17 +135,10 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
         <AlertCircle size={40} className="mx-auto text-rose-500" />
         <h2 className="text-lg font-bold text-slate-900">{error}</h2>
         <button
-<<<<<<< HEAD
           onClick={() => navigate(dashboardPath)}
           className="px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-bold uppercase tracking-wider"
         >
           {portalRole === 'admin' ? 'Return to Admin Dashboard' : 'Return to Officer Dashboard'}
-=======
-          onClick={() => navigate('/officer/dashboard')}
-          className="px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-bold uppercase tracking-wider"
-        >
-          Return to Officer Dashboard
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         </button>
       </div>
     );
@@ -173,11 +151,7 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
     try {
       const res = await api.deleteComplaint(complaint._id);
       if (res.success) {
-<<<<<<< HEAD
         navigate(dashboardPath);
-=======
-        navigate('/officer/dashboard');
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       } else {
         alert(res.message || 'Failed to delete complaint.');
       }
@@ -192,19 +166,11 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
       <div className="flex items-center justify-between gap-3">
         <button
           id="review-back-btn"
-<<<<<<< HEAD
           onClick={() => navigate(dashboardPath)}
           className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-900 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full shadow-xs transition-colors cursor-pointer"
         >
           <ArrowLeft size={13} />
           <span>{portalRole === 'admin' ? 'Admin Dashboard' : 'Officer Dashboard'}</span>
-=======
-          onClick={() => navigate('/officer/dashboard')}
-          className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-slate-600 hover:text-slate-900 bg-white border border-slate-200 px-3.5 py-1.5 rounded-full shadow-xs transition-colors cursor-pointer"
-        >
-          <ArrowLeft size={13} />
-          <span>Officer Dashboard</span>
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         </button>
 
         <div className="flex items-center gap-3">
@@ -314,7 +280,6 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
               </div>
             )}
           </div>
-<<<<<<< HEAD
 
           {/* AI Complaint Summarizer */}
           <div className="bg-white rounded-2xl border border-brand-gold/40 shadow-sm p-6 sm:p-7 space-y-4">
@@ -365,8 +330,6 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
               </p>
             )}
           </div>
-=======
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
         </div>
 
         {/* Right 1 Col: Officer Action Box */}

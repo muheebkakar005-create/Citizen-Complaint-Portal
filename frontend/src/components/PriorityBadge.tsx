@@ -51,16 +51,11 @@ export const PriorityBadge: React.FC<PriorityBadgeProps> = ({
   return (
     <span
       id={`priority-badge-${label.toLowerCase()}`}
-<<<<<<< HEAD
       className={`inline-flex items-center gap-1 font-black uppercase rounded tracking-wider border shrink-0 ${classes} ${sizeClasses[size]}`}
     >
       {priority === 'CRITICAL' && (
         <span className="w-1.5 h-1.5 rounded-full bg-brand-pink animate-pulse shrink-0" />
       )}
-=======
-      className={`inline-flex items-center font-black uppercase rounded tracking-wider border shrink-0 ${classes} ${sizeClasses[size]}`}
-    >
->>>>>>> d31d5d8e01b81c4ae82f7b3fa58cbf901e2d1d32
       <span>{label}</span>
       {showScore && score !== undefined && (
         <span className="ml-1 text-[9px] font-mono font-medium opacity-85 border-l border-current/40 pl-1">

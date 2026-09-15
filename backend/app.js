@@ -23,8 +23,13 @@ app.use(
   cors({
     origin(origin, callback) {
       // Allow no-origin requests (curl, mobile apps, same-origin) and any
-      // configured origin.
-      if (!origin || allowedOrigins.includes(origin)) {
+      // configured origin. Also allow any *.vercel.app subdomain so that
+      // Vercel preview deployments can reach the backend without env changes.
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        /^https:\/\/[a-zA-Z0-9-]+(\.vercel\.app)$/.test(origin)
+      ) {
         return callback(null, true);
       }
       return callback(new Error(`CORS: origin ${origin} is not allowed.`));

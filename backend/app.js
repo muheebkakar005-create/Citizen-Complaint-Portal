@@ -8,21 +8,26 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-// --- Database connection (serverless-safe: reuses existing connection) ---
-// On Vercel each serverless function invocation may reuse a warm container,
-// so we only call mongoose.connect() when there is no active connection.
-const connectDB = async () => {
-  if (mongoose.connection.readyState >= 1) return; // already connected / connecting
+// --- Database connection (serverless-safe) ---
+// Cache the promise so we connect once per container lifetime, not once per request.
+// Each incoming request awaits this promise before hitting any route handler.
+let dbConnectionPromise = null;
+
+const ensureDBConnected = async (req, res, next) => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('[MongoDB] Connected');
+    if (!dbConnectionPromise) {
+      dbConnectionPromise = mongoose.connect(process.env.MONGODB_URI, {
+        serverSelectionTimeoutMS: 10000, // fail fast on Vercel cold start
+        socketTimeoutMS: 45000,
+      });
+    }
+    await dbConnectionPromise;
+    next();
   } catch (err) {
     console.error('[MongoDB] Connection failed:', err.message);
-    // Do NOT call process.exit() in serverless — just let the request fail gracefully
-    throw err;
+    res.status(503).json({ success: false, message: 'Database unavailable. Please try again.' });
   }
 };
-connectDB();
 
 const authRoutes = require('./routes/authRoutes');
 const complaintRoutes = require('./routes/complaintRoutes');
@@ -71,10 +76,10 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({ success: true, message: 'Citizen Complaint Portal API is running.' });
 });
 
-// --- API routes ---
-app.use('/api/auth', authRoutes);
-app.use('/api/complaints', complaintRoutes);
-app.use('/api/ai', aiRoutes);
+// --- API routes (all require DB connection) ---
+app.use('/api/auth', ensureDBConnected, authRoutes);
+app.use('/api/complaints', ensureDBConnected, complaintRoutes);
+app.use('/api/ai', ensureDBConnected, aiRoutes);
 
 // --- Optionally serve the built frontend as static files ---
 // If ../frontend/dist exists (i.e. `npm run build` was run in the frontend

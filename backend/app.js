@@ -3,29 +3,59 @@ require('dotenv').config();
 
 const path = require('path');
 const fs = require('fs');
+const dns = require('dns');
 const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
+// Configure reliable DNS servers for Atlas SRV resolution
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1']);
+} catch {
+  // Ignore in environments where setServers is restricted
+}
+
+// Disable Mongoose query buffering so errors fail fast instead of hanging 10s
+mongoose.set('bufferCommands', false);
+
 // --- Database connection (serverless-safe) ---
-// Cache the promise so we connect once per container lifetime, not once per request.
-// Each incoming request awaits this promise before hitting any route handler.
 let dbConnectionPromise = null;
 
 const ensureDBConnected = async (req, res, next) => {
+  if (mongoose.connection.readyState === 1) {
+    return next();
+  }
+
+  const rawUri = process.env.MONGODB_URI || '';
+  const uri = rawUri.trim().replace(/^["']|["']$/g, '');
+
+  if (!uri) {
+    return res.status(500).json({
+      success: false,
+      message: 'MONGODB_URI is not set in environment variables on Vercel.',
+    });
+  }
+
   try {
-    if (!dbConnectionPromise) {
-      dbConnectionPromise = mongoose.connect(process.env.MONGODB_URI, {
-        serverSelectionTimeoutMS: 10000, // fail fast on Vercel cold start
-        socketTimeoutMS: 45000,
+    if (!dbConnectionPromise || mongoose.connection.readyState === 0 || mongoose.connection.readyState === 3) {
+      dbConnectionPromise = mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 8000,
+        socketTimeoutMS: 30000,
       });
     }
     await dbConnectionPromise;
-    next();
+    if (mongoose.connection.readyState === 1) {
+      return next();
+    }
+    throw new Error(`MongoDB connection readyState is ${mongoose.connection.readyState}`);
   } catch (err) {
+    dbConnectionPromise = null;
     console.error('[MongoDB] Connection failed:', err.message);
-    res.status(503).json({ success: false, message: 'Database unavailable. Please try again.' });
+    return res.status(503).json({
+      success: false,
+      message: `Database connection error: ${err.message}`,
+    });
   }
 };
 

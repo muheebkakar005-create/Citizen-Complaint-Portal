@@ -1,12 +1,12 @@
 import { Complaint, ComplaintFilters, OfficerStats, SatisfactionStats, User } from '../types';
 
-// In development, Vite proxies /api/* to localhost:5000 (see vite.config.ts),
-// so we use a relative path and CORS is not an issue.
-// In production (Vercel), VITE_BACKEND_URL must be set to the backend Vercel
-// deployment URL, e.g. https://citizen-complaint-portal-ruby.vercel.app
-const API_BASE = import.meta.env.VITE_BACKEND_URL
-  ? `${import.meta.env.VITE_BACKEND_URL}/api`
-  : '/api';
+// Production backend URL (Vercel deployment).
+// In development, Vite proxies /api/* to localhost:5000 (vite.config.ts),
+// so import.meta.env.DEV detects dev mode and uses a relative path (no CORS).
+// In production, always point to the deployed backend — either via an
+// optional VITE_BACKEND_URL env var OR the hardcoded fallback below.
+const PROD_BACKEND = import.meta.env.VITE_BACKEND_URL || 'https://citizen-complaint-portal-ruby.vercel.app';
+const API_BASE = import.meta.env.DEV ? '/api' : `${PROD_BACKEND}/api`;
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('token');

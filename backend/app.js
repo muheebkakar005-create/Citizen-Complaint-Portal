@@ -102,14 +102,19 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // --- Health check ---
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.status(200).json({ success: true, message: 'Citizen Complaint Portal API is running.' });
 });
 
-// --- API routes (all require DB connection) ---
+// --- API routes (all require DB connection; mounted on both /api/* and /* for Vercel compatibility) ---
 app.use('/api/auth', ensureDBConnected, authRoutes);
+app.use('/auth', ensureDBConnected, authRoutes);
+
 app.use('/api/complaints', ensureDBConnected, complaintRoutes);
+app.use('/complaints', ensureDBConnected, complaintRoutes);
+
 app.use('/api/ai', ensureDBConnected, aiRoutes);
+app.use('/ai', ensureDBConnected, aiRoutes);
 
 // --- Optionally serve the built frontend as static files ---
 // If ../frontend/dist exists (i.e. `npm run build` was run in the frontend

@@ -4,8 +4,24 @@ import { Complaint, ComplaintFilters, OfficerStats, SatisfactionStats, User } fr
 // In development, Vite proxies /api/* to localhost:5000 (vite.config.ts),
 // so import.meta.env.DEV detects dev mode and uses a relative path (no CORS).
 // In production, always point to the deployed backend — either via an
-// optional VITE_BACKEND_URL env var OR the hardcoded fallback below.
-const PROD_BACKEND = import.meta.env.VITE_BACKEND_URL || 'https://citizen-complaint-portal-ruby.vercel.app';
+function cleanBackendUrl(rawUrl?: string): string {
+  if (!rawUrl) return 'https://citizen-complaint-portal-ruby.vercel.app';
+  let cleaned = String(rawUrl)
+    .trim()
+    .replace(/^VITE_BACKEND_URL\s*=\s*/i, '')
+    .replace(/^["']|["']$/g, '')
+    .trim();
+  const urlMatch = cleaned.match(/https?:\/\/[^\s"']+/);
+  if (urlMatch) {
+    cleaned = urlMatch[0];
+  }
+  if (!cleaned.startsWith('http://') && !cleaned.startsWith('https://')) {
+    cleaned = 'https://citizen-complaint-portal-ruby.vercel.app';
+  }
+  return cleaned.replace(/\/+$/, '');
+}
+
+const PROD_BACKEND = cleanBackendUrl(import.meta.env.VITE_BACKEND_URL);
 const API_BASE = import.meta.env.DEV ? '/api' : `${PROD_BACKEND}/api`;
 
 function getAuthHeaders(): HeadersInit {

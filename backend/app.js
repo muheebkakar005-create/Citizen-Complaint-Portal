@@ -66,18 +66,25 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
-// --- Fix Vercel rewrites where req.url is rewritten to /api or / but req.originalUrl contains the full path ---
+// --- Fix Vercel rewrites so that Express receives the true client path ---
 app.use((req, res, next) => {
-  const originalPath = (req.originalUrl || req.url || '').split('?')[0];
-  if (
-    originalPath &&
-    originalPath !== '/' &&
-    originalPath !== '/api' &&
-    (req.url === '/' || req.url === '/api' || req.url.startsWith('/api?') || req.url.startsWith('/?'))
-  ) {
+  let truePath =
+    req.headers['x-matched-path'] ||
+    req.headers['x-vercel-matched-path'] ||
+    req.headers['x-rewrite-url'];
+
+  if (!truePath && req.headers['x-now-route-matches']) {
+    const match = req.headers['x-now-route-matches'].match(/(?:^|&)1=([^&]+)/);
+    if (match) {
+      truePath = '/' + decodeURIComponent(match[1]).replace(/^\//, '');
+    }
+  }
+
+  if (truePath) {
+    const cleanPath = truePath.split('?')[0];
     const queryIdx = req.url.indexOf('?');
     const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
-    req.url = originalPath + query;
+    req.url = cleanPath + query;
   }
   next();
 });

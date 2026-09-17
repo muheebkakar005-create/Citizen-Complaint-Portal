@@ -122,10 +122,18 @@ const signupValidation = [
   body('confirmPassword').notEmpty().withMessage('Confirm password is required'),
 ];
 
-// --- Direct Auth Endpoints (using app.use for prefix matching) ---
-app.use(['/api/auth/login', '/api/login', '/auth/login', '/login'], ensureDBConnected, login);
-app.use(['/api/auth/signup', '/api/signup', '/auth/signup', '/signup'], ensureDBConnected, signup);
-app.use(['/api/auth/me', '/api/me', '/auth/me', '/me'], ensureDBConnected, protect, getMe);
+// --- Direct Auth Endpoints (registered explicitly on all path variants) ---
+['/api/auth/login', '/api/login', '/auth/login', '/login'].forEach((p) => {
+  app.all(p, ensureDBConnected, login);
+});
+
+['/api/auth/signup', '/api/signup', '/auth/signup', '/signup'].forEach((p) => {
+  app.all(p, ensureDBConnected, signup);
+});
+
+['/api/auth/me', '/api/me', '/auth/me', '/me'].forEach((p) => {
+  app.all(p, ensureDBConnected, protect, getMe);
+});
 
 // --- Complaints & AI Endpoints ---
 app.use('/api/complaints', ensureDBConnected, complaintRoutes);

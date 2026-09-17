@@ -66,30 +66,32 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
-// --- Core middleware ---
-// CLIENT_URL can be a single origin or a comma-separated list (useful when
-// you need both the Vite dev server and a deployed frontend URL to work).
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
+// --- Fix Vercel rewrites where req.url is rewritten to /api or / but req.originalUrl contains the full path ---
+app.use((req, res, next) => {
+  const originalPath = (req.originalUrl || req.url || '').split('?')[0];
+  if (
+    originalPath &&
+    originalPath !== '/' &&
+    originalPath !== '/api' &&
+    (req.url === '/' || req.url === '/api' || req.url.startsWith('/api?') || req.url.startsWith('/?'))
+  ) {
+    const queryIdx = req.url.indexOf('?');
+    const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
+    req.url = originalPath + query;
+  }
+  next();
+});
 
+// --- Core middleware ---
 app.use(
   cors({
     origin(origin, callback) {
-      // Allow no-origin requests (curl, mobile apps, same-origin) and any
-      // configured origin. Also allow any *.vercel.app subdomain so that
-      // Vercel preview deployments can reach the backend without env changes.
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        /^https:\/\/.*\.vercel\.app$/.test(origin)
-      ) {
-        return callback(null, true);
-      }
-      return callback(new Error(`CORS: origin ${origin} is not allowed.`));
+      // Allow all origins for the public complaint portal API
+      return callback(null, true);
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 // Limit is higher than the default because the frontend submits complaint

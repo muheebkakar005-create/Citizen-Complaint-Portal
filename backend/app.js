@@ -106,11 +106,28 @@ app.get(['/api/health', '/health'], (req, res) => {
   res.status(200).json({ success: true, message: 'Citizen Complaint Portal API is running.' });
 });
 
-// --- API routes (all require DB connection; mounted individually for clean serverless prefix stripping) ---
-app.use('/api/auth', ensureDBConnected, authRoutes);
-app.use('/auth', ensureDBConnected, authRoutes);
-app.use('/api', ensureDBConnected, authRoutes);
+const { body } = require('express-validator');
+const { signup, login, getMe } = require('./controllers/authController');
+const { protect } = require('./middleware/authMiddleware');
 
+const loginValidation = [
+  body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
+  body('password').notEmpty().withMessage('Password is required'),
+];
+
+const signupValidation = [
+  body('name').trim().notEmpty().withMessage('Name is required'),
+  body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('confirmPassword').notEmpty().withMessage('Confirm password is required'),
+];
+
+// --- Direct Auth Endpoints (matches all path variations seamlessly) ---
+app.post(['/api/auth/login', '/api/login', '/auth/login', '/login'], ensureDBConnected, loginValidation, login);
+app.post(['/api/auth/signup', '/api/signup', '/auth/signup', '/signup'], ensureDBConnected, signupValidation, signup);
+app.get(['/api/auth/me', '/api/me', '/auth/me', '/me'], ensureDBConnected, protect, getMe);
+
+// --- Complaints & AI Endpoints ---
 app.use('/api/complaints', ensureDBConnected, complaintRoutes);
 app.use('/complaints', ensureDBConnected, complaintRoutes);
 

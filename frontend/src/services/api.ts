@@ -19,27 +19,46 @@ function getAuthHeaders(): HeadersInit {
 export const api = {
   // Auth
   async signup(data: { name: string; email: string; password: string; confirmPassword?: string }) {
-    const res = await fetch(`${API_BASE}/auth/signup`, {
+    let res = await fetch(`${API_BASE}/auth/signup`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
+    if (res.status === 404) {
+      res = await fetch(`${API_BASE}/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    }
     return res.json();
   },
 
   async login(data: { email: string; password: string }) {
-    const res = await fetch(`${API_BASE}/auth/login`, {
+    let res = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
+    if (res.status === 404) {
+      res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+    }
     return res.json();
   },
 
   async getMe(): Promise<{ success: boolean; user?: User; message?: string }> {
-    const res = await fetch(`${API_BASE}/auth/me`, {
+    let res = await fetch(`${API_BASE}/auth/me`, {
       headers: getAuthHeaders()
     });
+    if (res.status === 404) {
+      res = await fetch(`${API_BASE}/me`, {
+        headers: getAuthHeaders()
+      });
+    }
     return res.json();
   },
 

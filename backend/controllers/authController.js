@@ -24,26 +24,29 @@ function sanitizeUser(user) {
  * @access  Public
  */
 const signup = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    throw new ApiError(400, errors.array()[0].msg);
+  const { name, email, password, confirmPassword } = req.body || {};
+
+  if (!name || !email || !password) {
+    throw new ApiError(400, 'Name, email, and password are required.');
   }
 
-  const { name, email, password, confirmPassword } = req.body;
+  if (password.length < 6) {
+    throw new ApiError(400, 'Password must be at least 6 characters.');
+  }
 
   if (password !== confirmPassword) {
     throw new ApiError(400, 'Password and confirm password do not match.');
   }
 
-  const existingUser = await User.findOne({ email: email.toLowerCase() });
+  const existingUser = await User.findOne({ email: String(email).toLowerCase().trim() });
   if (existingUser) {
     throw new ApiError(409, 'An account with this email already exists.');
   }
 
   // role is intentionally NOT read from req.body - always 'citizen' here.
   const user = await User.create({
-    name,
-    email: email.toLowerCase(),
+    name: name.trim(),
+    email: String(email).toLowerCase().trim(),
     password,
     role: 'citizen',
   });
@@ -64,14 +67,13 @@ const signup = asyncHandler(async (req, res) => {
  * @access  Public
  */
 const login = asyncHandler(async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    throw new ApiError(400, errors.array()[0].msg);
+  const { email, password } = req.body || {};
+
+  if (!email || !password) {
+    throw new ApiError(400, 'Email and password are required.');
   }
 
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+  const user = await User.findOne({ email: String(email).toLowerCase().trim() }).select('+password');
   if (!user) {
     throw new ApiError(401, 'Invalid email or password.');
   }

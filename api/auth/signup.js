@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { login } = require('../backend/controllers/authController');
+const { signup } = require('../../backend/controllers/authController');
 
 module.exports = async (req, res) => {
   const origin = req.headers.origin || '*';
@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
       } catch {}
     }
 
-    return login(req, res, (err) => {
+    return signup(req, res, (err) => {
       if (err) {
         const statusCode = err.statusCode || (res.statusCode >= 400 ? res.statusCode : 500);
         return res.status(statusCode).json({ success: false, message: err.message });

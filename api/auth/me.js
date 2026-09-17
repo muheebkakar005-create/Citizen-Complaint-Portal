@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { login } = require('../backend/controllers/authController');
+const { getMe } = require('../../backend/controllers/authController');
+const { protect } = require('../../backend/middleware/authMiddleware');
 
 module.exports = async (req, res) => {
   const origin = req.headers.origin || '*';
@@ -21,18 +22,14 @@ module.exports = async (req, res) => {
       await mongoose.connect(uri, { serverSelectionTimeoutMS: 8000, socketTimeoutMS: 30000 });
     }
 
-    if (typeof req.body === 'string' && req.body) {
-      try {
-        req.body = JSON.parse(req.body);
-      } catch {}
-    }
-
-    return login(req, res, (err) => {
+    const next = (err) => {
       if (err) {
         const statusCode = err.statusCode || (res.statusCode >= 400 ? res.statusCode : 500);
         return res.status(statusCode).json({ success: false, message: err.message });
       }
-    });
+    };
+
+    return protect(req, res, () => getMe(req, res, next));
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

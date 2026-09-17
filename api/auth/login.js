@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { login } = require('../backend/controllers/authController');
+const { login } = require('../../backend/controllers/authController');
 
 module.exports = async (req, res) => {
   const origin = req.headers.origin || '*';

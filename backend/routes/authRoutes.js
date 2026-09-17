@@ -6,7 +6,7 @@ const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 router.post(
-  '/signup',
+  ['/', '/signup'],
   [
     body('name').trim().notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
@@ -19,7 +19,7 @@ router.post(
 );
 
 router.post(
-  '/login',
+  ['/', '/login'],
   [
     body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
     body('password').notEmpty().withMessage('Password is required'),
@@ -27,6 +27,6 @@ router.post(
   login
 );
 
-router.get('/me', protect, getMe);
+router.get(['/', '/me'], protect, getMe);
 
 module.exports = router;

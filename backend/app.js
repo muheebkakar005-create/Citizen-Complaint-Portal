@@ -135,6 +135,9 @@ const signupValidation = [
   app.all(p, ensureDBConnected, protect, getMe);
 });
 
+app.use('/api/auth', ensureDBConnected, authRoutes);
+app.use('/auth', ensureDBConnected, authRoutes);
+
 // --- Complaints & AI Endpoints ---
 app.use('/api/complaints', ensureDBConnected, complaintRoutes);
 app.use('/complaints', ensureDBConnected, complaintRoutes);

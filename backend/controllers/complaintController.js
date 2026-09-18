@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Complaint = require('../models/Complaint');
 const ApiError = require('../utils/ApiError');
 const { withPriority } = require('../utils/priorityCalculator');
-const { uploadBufferToCloudinary } = require('../services/imageUploadService');
+const { uploadBufferToCloudinary, uploadImageToCloudinary } = require('../services/imageUploadService');
 const { complaintsToCsv, exportFilename } = require('../services/csvService');
 
 const ACTIVE_STATUSES = ['pending', 'in-progress'];
@@ -109,16 +109,21 @@ const createComplaint = asyncHandler(async (req, res) => {
   let imageUrl = null;
   if (req.file) {
     try {
-      imageUrl = await uploadBufferToCloudinary(req.file.buffer);
+      imageUrl = await uploadImageToCloudinary(req.file.buffer);
     } catch (err) {
       // Image upload failing must never block complaint submission.
       console.error('[ImageUpload] Failed, continuing without image:', err.message);
       imageUrl = null;
     }
   } else if (typeof req.body.imageUrl === 'string' && req.body.imageUrl.trim()) {
-    // No file was uploaded via multipart - accept a client-supplied image
-    // URL / data URL directly (this is how the current frontend submits images).
-    imageUrl = req.body.imageUrl.trim();
+    const rawImage = req.body.imageUrl.trim();
+    try {
+      const uploaded = await uploadImageToCloudinary(rawImage);
+      imageUrl = uploaded || rawImage;
+    } catch (err) {
+      console.error('[ImageUpload] Cloudinary upload error, using raw image:', err.message);
+      imageUrl = rawImage;
+    }
   }
 
   const complaint = await Complaint.create({

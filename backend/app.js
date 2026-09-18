@@ -68,24 +68,60 @@ const app = express();
 
 // --- Fix Vercel rewrites so that Express receives the true client path ---
 app.use((req, res, next) => {
-  let truePath =
-    req.headers['x-matched-path'] ||
-    req.headers['x-vercel-matched-path'] ||
-    req.headers['x-rewrite-url'];
+  // Log for debugging (remove in production once confirmed working)
+  const debugHeaders = {
+    'x-now-route-matches': req.headers['x-now-route-matches'],
+    'x-matched-path': req.headers['x-matched-path'],
+    'x-vercel-matched-path': req.headers['x-vercel-matched-path'],
+    'x-rewrite-url': req.headers['x-rewrite-url'],
+    'x-vercel-url': req.headers['x-vercel-url'],
+    'req.url': req.url,
+    'req.originalUrl': req.originalUrl,
+  };
+  console.log('[PathFix] Headers:', JSON.stringify(debugHeaders));
 
-  if (!truePath && req.headers['x-now-route-matches']) {
-    const match = req.headers['x-now-route-matches'].match(/(?:^|&)1=([^&]+)/);
-    if (match) {
-      truePath = '/' + decodeURIComponent(match[1]).replace(/^\//, '');
+  let truePath = null;
+
+  // 1. x-now-route-matches: "1=api%2Fcomplaints%2F<id>" for "/(.*)" capture group
+  if (req.headers['x-now-route-matches']) {
+    const routeMatches = req.headers['x-now-route-matches'];
+    const nextPathMatch = routeMatches.match(/(?:^|&)nextPath=([^&]+)/);
+    if (nextPathMatch) {
+      truePath = decodeURIComponent(nextPathMatch[1]);
+    } else {
+      const param1Match = routeMatches.match(/(?:^|&)1=([^&]+)/);
+      if (param1Match) {
+        const decoded = decodeURIComponent(param1Match[1]);
+        truePath = decoded.startsWith('/') ? decoded : '/' + decoded;
+      }
     }
+  }
+
+  // 2. Fallback Vercel headers
+  if (!truePath) {
+    truePath =
+      req.headers['x-matched-path'] ||
+      req.headers['x-vercel-matched-path'] ||
+      req.headers['x-rewrite-url'] ||
+      req.headers['x-vercel-url'] ||
+      null;
+  }
+
+  // 3. If x-matched-path is just "/api/index.js" (the destination), skip it
+  if (truePath && (truePath === '/api/index.js' || truePath === '/api/index')) {
+    truePath = null;
   }
 
   if (truePath) {
     const cleanPath = truePath.split('?')[0];
-    const queryIdx = req.url.indexOf('?');
-    const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
-    req.url = cleanPath + query;
+    if (cleanPath && cleanPath !== req.url.split('?')[0]) {
+      const queryIdx = req.url.indexOf('?');
+      const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
+      req.url = cleanPath + query;
+      console.log('[PathFix] Restored req.url to:', req.url);
+    }
   }
+
   next();
 });
 

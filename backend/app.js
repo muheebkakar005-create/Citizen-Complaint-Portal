@@ -1,7 +1,6 @@
-// Load env vars first (needed both locally via server.js AND on Vercel via app.js)
 require('dotenv').config();
-
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const fs = require('fs');
 const dns = require('dns');
 const mongoose = require('mongoose');
@@ -107,8 +106,14 @@ app.use((req, res, next) => {
       null;
   }
 
-  // 3. If x-matched-path is just "/api/index.js" (the destination), skip it
-  if (truePath && (truePath === '/api/index.js' || truePath === '/api/index')) {
+  // 3. If x-matched-path or truePath is just the destination script, skip it
+  if (
+    truePath &&
+    (truePath === 'api/index.js' ||
+      truePath === '/api/index.js' ||
+      truePath === '/api/index' ||
+      truePath === 'api/index')
+  ) {
     truePath = null;
   }
 

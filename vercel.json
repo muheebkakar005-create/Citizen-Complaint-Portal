@@ -2,6 +2,14 @@
   "version": 2,
   "rewrites": [
     {
+      "source": "/api/complaints/:match*",
+      "destination": "/api/complaints"
+    },
+    {
+      "source": "/api/ai/:match*",
+      "destination": "/api/ai"
+    },
+    {
       "source": "/health",
       "destination": "/api/health"
     }

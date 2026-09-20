@@ -111,10 +111,23 @@ export const api = {
   },
 
   async getComplaintById(id: string): Promise<{ success: boolean; complaint: Complaint }> {
-    const res = await fetch(`${API_BASE}/complaints/${id}`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/${id}`, {
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.complaint) return data;
+      }
+    } catch {
+      // Fall through to query fallback
+    }
+
+    // Guaranteed fallback using /api/complaints?id=...
+    const fallbackRes = await fetch(`${API_BASE}/complaints?id=${encodeURIComponent(id)}`, {
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async createComplaint(data: {
@@ -133,11 +146,25 @@ export const api = {
   },
 
   async upvoteComplaint(id: string): Promise<{ success: boolean; message: string; complaint?: Complaint }> {
-    const res = await fetch(`${API_BASE}/complaints/${id}/upvote`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/${id}/upvote`, {
+        method: 'PATCH',
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?id=${encodeURIComponent(id)}&action=upvote`, {
       method: 'PATCH',
-      headers: getAuthHeaders()
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ id })
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async updateComplaintStatus(
@@ -145,12 +172,26 @@ export const api = {
     status: string,
     officerRemark?: string
   ): Promise<{ success: boolean; message: string; complaint?: Complaint }> {
-    const res = await fetch(`${API_BASE}/complaints/${id}/status`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/${id}/status`, {
+        method: 'PATCH',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ status, officerRemark })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?id=${encodeURIComponent(id)}&action=status`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
-      body: JSON.stringify({ status, officerRemark })
+      body: JSON.stringify({ id, status, officerRemark })
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async submitFeedback(
@@ -158,20 +199,48 @@ export const api = {
     rating: number,
     comment: string = ''
   ): Promise<{ success: boolean; message: string; complaint?: Complaint }> {
-    const res = await fetch(`${API_BASE}/complaints/${id}/feedback`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/${id}/feedback`, {
+        method: 'PATCH',
+        headers: getAuthHeaders(),
+        body: JSON.stringify({ feedbackRating: rating, feedbackComment: comment })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?id=${encodeURIComponent(id)}&action=feedback`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
-      body: JSON.stringify({ feedbackRating: rating, feedbackComment: comment })
+      body: JSON.stringify({ id, feedbackRating: rating, feedbackComment: comment })
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async deleteComplaint(id: string): Promise<{ success: boolean; message: string }> {
-    const res = await fetch(`${API_BASE}/complaints/${id}`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/${id}`, {
+        method: 'DELETE',
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?id=${encodeURIComponent(id)}`, {
       method: 'DELETE',
-      headers: getAuthHeaders()
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ id })
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   // Officer AI & Analytics

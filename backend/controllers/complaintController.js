@@ -155,7 +155,14 @@ const createComplaint = asyncHandler(async (req, res) => {
  * @access  Public (optionalAuth attaches req.user if logged in, so the
  *          response can flag which complaints the viewer already upvoted)
  */
-const getComplaints = asyncHandler(async (req, res) => {
+const getComplaints = asyncHandler(async (req, res, next) => {
+  const targetId = req.query.id || (req.params && req.params.id);
+  if (targetId) {
+    req.params = req.params || {};
+    req.params.id = targetId;
+    return getComplaintById(req, res, next);
+  }
+
   const filter = buildMongoFilter(req.query);
 
   const complaints = await Complaint.find(filter)
@@ -303,11 +310,12 @@ const getSatisfactionStats = asyncHandler(async (req, res) => {
  * @access  Public
  */
 const getComplaintById = asyncHandler(async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const targetId = (req.params && req.params.id) || req.query.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
     throw new ApiError(404, 'Complaint not found.');
   }
 
-  const complaint = await Complaint.findById(req.params.id).lean();
+  const complaint = await Complaint.findById(targetId).lean();
 
   if (!complaint) {
     throw new ApiError(404, 'Complaint not found.');
@@ -326,11 +334,12 @@ const getComplaintById = asyncHandler(async (req, res) => {
  * @access  Private (citizen)
  */
 const upvoteComplaint = asyncHandler(async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const targetId = (req.params && req.params.id) || req.query.id || req.body.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
     throw new ApiError(404, 'Complaint not found.');
   }
 
-  const complaint = await Complaint.findById(req.params.id);
+  const complaint = await Complaint.findById(targetId);
   if (!complaint) {
     throw new ApiError(404, 'Complaint not found.');
   }
@@ -365,7 +374,8 @@ const updateComplaintStatus = asyncHandler(async (req, res) => {
     throw new ApiError(400, errors.array()[0].msg);
   }
 
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const targetId = (req.params && req.params.id) || req.query.id || req.body.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
     throw new ApiError(404, 'Complaint not found.');
   }
 
@@ -413,13 +423,14 @@ const submitFeedback = asyncHandler(async (req, res) => {
     throw new ApiError(400, errors.array()[0].msg);
   }
 
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const targetId = (req.params && req.params.id) || req.query.id || req.body.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
     throw new ApiError(404, 'Complaint not found.');
   }
 
   const { feedbackRating, feedbackComment } = req.body;
 
-  const complaint = await Complaint.findById(req.params.id);
+  const complaint = await Complaint.findById(targetId);
   if (!complaint) {
     throw new ApiError(404, 'Complaint not found.');
   }
@@ -457,11 +468,12 @@ const submitFeedback = asyncHandler(async (req, res) => {
  * @access  Private (owner or officer)
  */
 const deleteComplaint = asyncHandler(async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const targetId = (req.params && req.params.id) || req.query.id || req.body.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
     throw new ApiError(404, 'Complaint not found.');
   }
 
-  const complaint = await Complaint.findById(req.params.id);
+  const complaint = await Complaint.findById(targetId);
   if (!complaint) {
     throw new ApiError(404, 'Complaint not found.');
   }

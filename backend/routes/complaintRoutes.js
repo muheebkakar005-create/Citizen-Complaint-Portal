@@ -82,6 +82,21 @@ router.get('/', optionalAuth, getComplaints);
 // GET /api/complaints/:id - public complaint detail
 router.get('/:id', optionalAuth, getComplaintById);
 
+// Root PATCH fallback (/api/complaints?id=...&action=...)
+router.patch('/', protect, (req, res, next) => {
+  const action = req.query.action || req.body.action;
+  if (action === 'upvote') {
+    return citizenOnly(req, res, () => upvoteComplaint(req, res, next));
+  }
+  if (action === 'feedback' || req.body.feedbackRating) {
+    return citizenOnly(req, res, () => submitFeedback(req, res, next));
+  }
+  return officerOnly(req, res, () => updateComplaintStatus(req, res, next));
+});
+
+// Root DELETE fallback (/api/complaints?id=...)
+router.delete('/', protect, deleteComplaint);
+
 // PATCH /api/complaints/:id/upvote - citizen upvotes
 router.patch('/:id/upvote', protect, citizenOnly, upvoteComplaint);
 

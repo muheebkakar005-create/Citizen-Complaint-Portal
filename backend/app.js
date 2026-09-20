@@ -65,65 +65,51 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
-// --- Fix Vercel rewrites so that Express receives the true client path ---
+// --- Fix Vercel filesystem routing so Express receives the true client path ---
+// When Vercel uses api/complaints/[id].js, it sends:
+//   x-matched-path: /api/complaints/[id]
+//   x-now-route-matches: id=<value>
+//   req.url: /?id=<value>  (stripped to just query params)
+// We need to reconstruct: /api/complaints/<value>
 app.use((req, res, next) => {
-  // Log for debugging (remove in production once confirmed working)
-  const debugHeaders = {
-    'x-now-route-matches': req.headers['x-now-route-matches'],
-    'x-matched-path': req.headers['x-matched-path'],
-    'x-vercel-matched-path': req.headers['x-vercel-matched-path'],
-    'x-rewrite-url': req.headers['x-rewrite-url'],
-    'x-vercel-url': req.headers['x-vercel-url'],
-    'req.url': req.url,
-    'req.originalUrl': req.originalUrl,
-  };
-  console.log('[PathFix] Headers:', JSON.stringify(debugHeaders));
+  const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
+  const routeMatches = req.headers['x-now-route-matches'];
 
-  let truePath = null;
-
-  // 1. x-now-route-matches: "1=api%2Fcomplaints%2F<id>" for "/(.*)" capture group
-  if (req.headers['x-now-route-matches']) {
-    const routeMatches = req.headers['x-now-route-matches'];
-    const nextPathMatch = routeMatches.match(/(?:^|&)nextPath=([^&]+)/);
-    if (nextPathMatch) {
-      truePath = decodeURIComponent(nextPathMatch[1]);
-    } else {
-      const param1Match = routeMatches.match(/(?:^|&)1=([^&]+)/);
-      if (param1Match) {
-        const decoded = decodeURIComponent(param1Match[1]);
-        truePath = decoded.startsWith('/') ? decoded : '/' + decoded;
-      }
+  // Only act if we have Vercel headers
+  if (matchedPath && routeMatches) {
+    // Skip if matched path is just the index handler file
+    if (matchedPath.endsWith('.js') || matchedPath === '/api/index') {
+      return next();
     }
-  }
 
-  // 2. Fallback Vercel headers
-  if (!truePath) {
-    truePath =
-      req.headers['x-matched-path'] ||
-      req.headers['x-vercel-matched-path'] ||
-      req.headers['x-rewrite-url'] ||
-      req.headers['x-vercel-url'] ||
-      null;
-  }
+    // Check if the matched path has [param] placeholders
+    if (matchedPath.includes('[')) {
+      // Parse route matches: "id=6aab1a34b2a0a9c91fd2a65e" or "id=xxx&slug=yyy"
+      const params = {};
+      routeMatches.split('&').forEach(pair => {
+        const [key, val] = pair.split('=');
+        if (key && val) {
+          params[decodeURIComponent(key)] = decodeURIComponent(val);
+        }
+      });
 
-  // 3. If x-matched-path or truePath is just the destination script, skip it
-  if (
-    truePath &&
-    (truePath === 'api/index.js' ||
-      truePath === '/api/index.js' ||
-      truePath === '/api/index' ||
-      truePath === 'api/index')
-  ) {
-    truePath = null;
-  }
+      // Substitute [param] and [...param] placeholders with actual values
+      let reconstructed = matchedPath;
+      for (const [key, val] of Object.entries(params)) {
+        reconstructed = reconstructed.replace(`[${key}]`, val);
+        reconstructed = reconstructed.replace(`[...${key}]`, val);
+      }
 
-  if (truePath) {
-    const cleanPath = truePath.split('?')[0];
-    if (cleanPath && cleanPath !== req.url.split('?')[0]) {
-      const queryIdx = req.url.indexOf('?');
-      const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
-      req.url = cleanPath + query;
-      console.log('[PathFix] Restored req.url to:', req.url);
+      // Only apply if we actually resolved all placeholders
+      if (!reconstructed.includes('[')) {
+        req.url = reconstructed;
+      }
+    } else {
+      // No placeholders — use matched path directly (e.g. /api/complaints)
+      const cleanPath = matchedPath.split('?')[0];
+      if (cleanPath && cleanPath !== req.url.split('?')[0]) {
+        req.url = cleanPath;
+      }
     }
   }
 

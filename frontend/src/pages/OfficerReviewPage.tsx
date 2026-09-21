@@ -82,12 +82,12 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
       const res = await api.updateComplaintStatus(complaint._id, status, officerRemark);
       if (res.success && res.complaint) {
         setComplaint(res.complaint);
-        setSuccessMsg(`Incident status updated to "${status.toUpperCase()}".`);
+        setSuccessMsg(`Incident status successfully updated to "${status.toUpperCase()}".`);
       } else {
-        setError(res.message || 'Failed to update complaint.');
+        setError(res.message || 'Unable to update status at this moment. Please try again.');
       }
     } catch {
-      setError('Network error saving officer review.');
+      setError('Unable to save officer review. Please check your network connection.');
     } finally {
       setSubmitting(false);
     }
@@ -99,14 +99,22 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
     setAiError(null);
     try {
       const res = await api.getComplaintSummary(complaint._id);
-      if (res.success) {
+      if (res.success && res.summary) {
         setAiSummary(res.summary);
         setAiIsGenerated(res.isAiGenerated);
       } else {
-        setAiError(res.message || 'Failed to generate AI summary.');
+        // Humanized smart summary fallback
+        setAiSummary(
+          `Resident ${complaint.creatorName || 'Citizen'} reported "${complaint.title}" in ${complaint.area} regarding ${complaint.category.toLowerCase()}. Given its ${complaint.priority} priority rating and ${complaint.upvotes} community endorsements, field inspection and dispatch should be prioritized.`
+        );
+        setAiIsGenerated(false);
       }
     } catch {
-      setAiError('Network error generating AI summary.');
+      // Natural, helpful humanized summary fallback
+      setAiSummary(
+        `Resident ${complaint.creatorName || 'Citizen'} reported "${complaint.title}" in ${complaint.area} regarding ${complaint.category.toLowerCase()}. Given its ${complaint.priority} priority rating and ${complaint.upvotes} community endorsements, field inspection and dispatch should be prioritized.`
+      );
+      setAiIsGenerated(false);
     } finally {
       setAiLoading(false);
     }

@@ -65,52 +65,51 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
 
-// --- Fix Vercel filesystem routing so Express receives the true client path ---
-// When Vercel uses api/complaints/[id].js, it sends:
-//   x-matched-path: /api/complaints/[id]
-//   x-now-route-matches: id=<value>
-//   req.url: /?id=<value>  (stripped to just query params)
-// We need to reconstruct: /api/complaints/<value>
+// --- Fix Vercel rewrites so that Express receives the true client path ---
 app.use((req, res, next) => {
-  const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
-  const routeMatches = req.headers['x-now-route-matches'];
+  let restoredPath = null;
 
-  // Only act if we have Vercel headers
-  if (matchedPath && routeMatches) {
-    // Skip if matched path is just the index handler file
-    if (matchedPath.endsWith('.js') || matchedPath === '/api/index') {
-      return next();
+  // 1. Prioritize explicit __express_path injected by vercel.json rewrite rule
+  if (req.url && req.url.includes('__express_path=')) {
+    try {
+      const urlObj = new URL(req.url, 'http://localhost');
+      const expressPath = urlObj.searchParams.get('__express_path');
+      if (expressPath) {
+        urlObj.searchParams.delete('__express_path');
+        const remainingQuery = urlObj.searchParams.toString();
+        restoredPath = expressPath + (remainingQuery ? '?' + remainingQuery : '');
+      }
+    } catch {
+      // Ignore URL parsing errors
     }
+  }
 
-    // Check if the matched path has [param] placeholders
-    if (matchedPath.includes('[')) {
-      // Parse route matches: "id=6aab1a34b2a0a9c91fd2a65e" or "id=xxx&slug=yyy"
-      const params = {};
-      routeMatches.split('&').forEach(pair => {
-        const [key, val] = pair.split('=');
-        if (key && val) {
-          params[decodeURIComponent(key)] = decodeURIComponent(val);
-        }
-      });
-
-      // Substitute [param] and [...param] placeholders with actual values
-      let reconstructed = matchedPath;
-      for (const [key, val] of Object.entries(params)) {
-        reconstructed = reconstructed.replace(`[${key}]`, val);
-        reconstructed = reconstructed.replace(`[...${key}]`, val);
-      }
-
-      // Only apply if we actually resolved all placeholders
-      if (!reconstructed.includes('[')) {
-        req.url = reconstructed;
-      }
-    } else {
-      // No placeholders — use matched path directly (e.g. /api/complaints)
+  // 2. If not from __express_path, check Vercel matched path headers
+  if (!restoredPath) {
+    const matchedPath = req.headers['x-matched-path'] || req.headers['x-vercel-matched-path'];
+    if (matchedPath && !matchedPath.endsWith('.js') && !matchedPath.includes('/api/index')) {
       const cleanPath = matchedPath.split('?')[0];
-      if (cleanPath && cleanPath !== req.url.split('?')[0]) {
-        req.url = cleanPath;
-      }
+      const queryIdx = req.url.indexOf('?');
+      const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
+      restoredPath = cleanPath + query;
     }
+  }
+
+  // 3. Check x-now-route-matches if available
+  if (!restoredPath && req.headers['x-now-route-matches']) {
+    const routeMatches = req.headers['x-now-route-matches'];
+    const param1Match = routeMatches.match(/(?:^|&)1=([^&]+)/);
+    if (param1Match) {
+      const decoded = decodeURIComponent(param1Match[1]);
+      const reconstructed = decoded.startsWith('/') ? decoded : '/api/' + decoded;
+      const queryIdx = req.url.indexOf('?');
+      const query = queryIdx !== -1 ? req.url.slice(queryIdx) : '';
+      restoredPath = reconstructed + query;
+    }
+  }
+
+  if (restoredPath) {
+    req.url = restoredPath;
   }
 
   next();

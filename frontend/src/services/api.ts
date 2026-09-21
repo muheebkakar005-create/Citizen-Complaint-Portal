@@ -97,17 +97,41 @@ export const api = {
 
   async checkDuplicates(category: string, area: string): Promise<{ success: boolean; hasDuplicates: boolean; duplicates: Complaint[] }> {
     const params = new URLSearchParams({ category, area });
-    const res = await fetch(`${API_BASE}/complaints/duplicates?${params.toString()}`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/duplicates?${params.toString()}`, {
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?action=duplicates&${params.toString()}`, {
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async getMyComplaints(): Promise<{ success: boolean; count: number; complaints: Complaint[] }> {
-    const res = await fetch(`${API_BASE}/complaints/mine`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/mine`, {
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?action=mine`, {
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async getComplaintById(id: string): Promise<{ success: boolean; complaint: Complaint }> {
@@ -251,11 +275,24 @@ export const api = {
     generatedAt: string;
     stats: OfficerStats;
   }> {
-    const res = await fetch(`${API_BASE}/ai/officer-summary`, {
+    try {
+      const res = await fetch(`${API_BASE}/ai/officer-summary`, {
+        method: 'POST',
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/ai/briefing`, {
       method: 'POST',
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async getComplaintSummary(id: string): Promise<{
@@ -265,10 +302,22 @@ export const api = {
     generatedAt: string;
     message?: string;
   }> {
-    const res = await fetch(`${API_BASE}/ai/complaints/${id}/summary`, {
+    try {
+      const res = await fetch(`${API_BASE}/ai/complaints/${id}/summary`, {
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/ai/summary?id=${encodeURIComponent(id)}`, {
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   async getSatisfactionStats(): Promise<{
@@ -280,10 +329,22 @@ export const api = {
     neutralFeedback: number;
     lowRatedComplaints: SatisfactionStats['lowRatedComplaints'];
   }> {
-    const res = await fetch(`${API_BASE}/complaints/stats/satisfaction`, {
+    try {
+      const res = await fetch(`${API_BASE}/complaints/stats/satisfaction`, {
+        headers: getAuthHeaders()
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) return data;
+      }
+    } catch {
+      // Fall through
+    }
+
+    const fallbackRes = await fetch(`${API_BASE}/complaints?action=satisfaction`, {
       headers: getAuthHeaders()
     });
-    return res.json();
+    return fallbackRes.json();
   },
 
   getExportUrl(filters: ComplaintFilters = {}): string {

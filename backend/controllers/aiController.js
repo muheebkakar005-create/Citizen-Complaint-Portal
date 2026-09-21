@@ -127,8 +127,15 @@ const getOfficerSummary = asyncHandler(async (req, res) => {
  *          "Summarize with AI" form on the complaint review page.
  * @access  Private (officer or admin)
  */
+const mongoose = require('mongoose');
+
 const getComplaintSummary = asyncHandler(async (req, res) => {
-  const complaint = await Complaint.findById(req.params.id).lean();
+  const targetId = (req.params && req.params.id) || req.query.id || req.body.id;
+  if (!targetId || !mongoose.Types.ObjectId.isValid(targetId)) {
+    throw new ApiError(404, 'Complaint not found.');
+  }
+
+  const complaint = await Complaint.findById(targetId).lean();
   if (!complaint) {
     throw new ApiError(404, 'Complaint not found.');
   }

@@ -156,6 +156,16 @@ const createComplaint = asyncHandler(async (req, res) => {
  *          response can flag which complaints the viewer already upvoted)
  */
 const getComplaints = asyncHandler(async (req, res, next) => {
+  if (req.query.action === 'satisfaction') {
+    return getSatisfactionStats(req, res, next);
+  }
+  if (req.query.action === 'mine') {
+    return getMyComplaints(req, res, next);
+  }
+  if (req.query.action === 'duplicates') {
+    return checkDuplicates(req, res, next);
+  }
+
   const targetId = req.query.id || (req.params && req.params.id);
   if (targetId) {
     req.params = req.params || {};

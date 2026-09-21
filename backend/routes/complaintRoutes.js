@@ -84,6 +84,11 @@ router.get('/:id', optionalAuth, getComplaintById);
 
 // Root PATCH fallback (/api/complaints?id=...&action=...)
 router.patch('/', protect, (req, res, next) => {
+  const targetId = req.query.id || req.body.id;
+  if (targetId) {
+    req.params = req.params || {};
+    req.params.id = targetId;
+  }
   const action = req.query.action || req.body.action;
   if (action === 'upvote') {
     return citizenOnly(req, res, () => upvoteComplaint(req, res, next));

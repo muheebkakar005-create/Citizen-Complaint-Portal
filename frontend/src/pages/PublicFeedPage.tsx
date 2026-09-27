@@ -141,9 +141,9 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
   const hasActiveFilters = search || category !== 'All' || status !== 'All' || priority !== 'All' || area !== 'All';
 
   return (
-    <div className="space-y-6 py-6 font-sans">
+    <div className="space-y-3 sm:space-y-6 py-4 sm:py-6 font-sans">
       {/* Page Title & Hero Bar */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+      <div className="bg-white rounded-xl sm:rounded-2xl border border-slate-200 p-4 sm:p-6 flex items-center justify-between gap-3 shadow-sm">
         <div>
           <div className="flex items-center gap-2 text-teal-600 font-bold text-xs tracking-wider uppercase">
             <Compass size={15} />
@@ -167,7 +167,7 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
       </div>
 
       {/* Search & Filter Controls Bar */}
-      <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-4">
+      <div className="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
         {/* Search input + Sort */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
@@ -306,7 +306,7 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
 
       {/* Complaints Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-5">
           {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
             <div key={i} className="h-44 rounded-2xl bg-slate-100 animate-pulse border border-slate-200" />
           ))}
@@ -326,7 +326,7 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-3 sm:gap-5">
           {complaints.map((complaint, idx) => {
             const hasVoted = user && complaint.upvotedBy.includes(user.id);
             const isUpvoting = upvotingIds.has(complaint._id);
@@ -341,7 +341,7 @@ export const PublicFeedPage: React.FC<PublicFeedPageProps> = ({ navigate }) => {
                 whileHover={{ y: -6, borderColor: '#c9a227', boxShadow: '0 14px 28px -6px rgba(11, 61, 44, 0.12), 0 4px 14px rgba(201, 162, 39, 0.15)' }}
                 whileTap={{ scale: 0.985 }}
                 onClick={() => navigate(`/complaints/${complaint._id}`)}
-                className="p-5 rounded-2xl bg-white/95 backdrop-blur-xs border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
+                className="p-4 rounded-xl sm:rounded-2xl bg-white/95 border border-slate-200 transition-all cursor-pointer flex flex-col justify-between space-y-3 group"
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-2 flex-wrap">

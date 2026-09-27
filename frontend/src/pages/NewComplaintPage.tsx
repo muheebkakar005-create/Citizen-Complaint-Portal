@@ -139,7 +139,7 @@ export const NewComplaintPage: React.FC<NewComplaintPageProps> = ({ navigate }) 
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto py-8 space-y-6 font-sans">
+    <div className="w-full max-w-4xl mx-auto py-4 sm:py-8 space-y-4 sm:space-y-6 font-sans">
       {/* Header Bar */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div>
@@ -203,7 +203,7 @@ export const NewComplaintPage: React.FC<NewComplaintPageProps> = ({ navigate }) 
       )}
 
       {/* Main Reporting Form */}
-      <form onSubmit={handleFormSubmit} className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <form onSubmit={handleFormSubmit} className="bg-white p-4 sm:p-8 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm space-y-6">
         {/* Title */}
         <div>
           <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">

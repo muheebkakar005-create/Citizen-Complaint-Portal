@@ -212,7 +212,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
   };
 
   return (
-    <div className="space-y-6 py-6 font-sans">
+    <div className="space-y-4 sm:space-y-6 py-4 sm:py-6 font-sans">
       {/* Top Header / Navbar Bar */}
       <div className="bg-white rounded-2xl border border-slate-200 px-6 py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
         <div className="flex items-center gap-3">
@@ -280,7 +280,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           whileHover={{ y: -3 }}
-          className="lg:col-span-2 bg-gradient-to-br from-slate-900 to-indigo-900 rounded-2xl p-6 text-white shadow-xl shadow-slate-200 relative overflow-hidden flex flex-col justify-between space-y-4"
+          className="lg:col-span-2 bg-gradient-to-br from-slate-900 to-indigo-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white shadow-xl shadow-slate-200 relative overflow-hidden flex flex-col justify-between space-y-3 sm:space-y-4"
         >
           <div className="relative z-10 space-y-3">
             <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -348,7 +348,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05, duration: 0.25 }}
             whileHover={{ y: -3, boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}
-            className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
+            className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
           >
             <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">New Reports</div>
             <div className="text-2xl font-bold text-slate-900">{stats?.newToday ?? 0}</div>
@@ -360,7 +360,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.25 }}
             whileHover={{ y: -3, boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}
-            className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
+            className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
           >
             <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Critical</div>
             <div className="text-2xl font-bold text-brand-pink">{stats?.critical ?? 0}</div>
@@ -372,7 +372,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15, duration: 0.25 }}
             whileHover={{ y: -3, boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}
-            className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
+            className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
           >
             <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Resolved</div>
             <div className="text-2xl font-bold text-emerald-600">{stats?.resolved ?? 0}</div>
@@ -384,7 +384,7 @@ export const OfficerDashboard: React.FC<OfficerDashboardProps> = ({ navigate, po
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.25 }}
             whileHover={{ y: -3, boxShadow: '0 8px 20px rgba(0,0,0,0.06)' }}
-            className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
+            className="bg-white p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center transition-all cursor-default"
           >
             <div className="text-xs font-bold text-slate-400 uppercase mb-1 tracking-wider">Satisfaction</div>
             <div className="text-2xl font-bold text-teal-700">

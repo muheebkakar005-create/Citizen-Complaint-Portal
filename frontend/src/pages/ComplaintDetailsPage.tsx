@@ -160,7 +160,7 @@ export const ComplaintDetailsPage: React.FC<ComplaintDetailsPageProps> = ({ id, 
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-8 space-y-6 font-sans">
+    <div className="w-full max-w-6xl mx-auto py-4 sm:py-8 space-y-4 sm:space-y-6 font-sans">
       {/* Back Button & Officer Console shortcut */}
       <div className="flex items-center justify-between gap-3">
         <button
@@ -201,7 +201,7 @@ export const ComplaintDetailsPage: React.FC<ComplaintDetailsPageProps> = ({ id, 
       {/* Main Detail Card */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         {/* Top Header Banner */}
-        <div className="p-6 sm:p-8 space-y-4 border-b border-slate-100">
+        <div className="p-4 sm:p-8 space-y-3 sm:space-y-4 border-b border-slate-100">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-mono text-slate-400">
@@ -258,7 +258,7 @@ export const ComplaintDetailsPage: React.FC<ComplaintDetailsPageProps> = ({ id, 
         </div>
 
         {/* Body Content */}
-        <div className="p-6 sm:p-8 space-y-6">
+        <div className="p-4 sm:p-8 space-y-4 sm:space-y-6">
           {/* Description */}
           <div className="space-y-2">
             <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Incident Description</h2>

@@ -169,7 +169,7 @@ export const OfficerReviewPage: React.FC<OfficerReviewPageProps> = ({ id, naviga
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-8 space-y-6 font-sans">
+    <div className="w-full max-w-4xl mx-auto py-4 sm:py-8 space-y-4 sm:space-y-6 font-sans">
       {/* Back to Console Bar */}
       <div className="flex items-center justify-between gap-3">
         <button

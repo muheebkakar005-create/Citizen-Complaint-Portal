@@ -56,7 +56,7 @@ export const MyComplaintsPage: React.FC<MyComplaintsPageProps> = ({ navigate }) 
   };
 
   return (
-    <div className="space-y-6 py-6 font-sans">
+    <div className="space-y-4 sm:space-y-6 py-4 sm:py-6 font-sans">
       {/* Header Bar */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-sm">
         <div>

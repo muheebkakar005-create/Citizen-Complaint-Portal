@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { MobileBottomNav } from './components/MobileBottomNav';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
@@ -210,24 +211,22 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-brand-light text-brand-dark font-sans antialiased selection:bg-brand-cyan selection:text-brand-dark relative">
-      {/* Responsive Background Layer: Mobile pic for mobile UI (< md), PC pic for PC UI (>= md) */}
+      {/* Responsive Background Layer */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-        {/* Mobile Background: strictly for mobile UI */}
         <div
           className="block md:hidden w-full h-full bg-cover bg-top bg-no-repeat transition-opacity duration-300"
           style={{ backgroundImage: "url('/bg-mobile.jpg')" }}
         />
-        {/* PC Background: strictly for PC / Desktop UI */}
         <div
           className="hidden md:block w-full h-full bg-cover bg-center bg-no-repeat transition-opacity duration-300"
           style={{ backgroundImage: "url('/bg-pc.jpg')" }}
         />
-        {/* Ambient overlay to guarantee WCAG text contrast and clean surface readability */}
         <div className="absolute inset-0 bg-[#fbf8ef]/80 md:bg-[#fbf8ef]/75" />
       </div>
 
       <Navbar currentPath={currentPath} navigate={navigate} />
-      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 overflow-hidden relative z-10">
+      {/* pb-20 on mobile reserves space above the fixed bottom nav */}
+      <main className="flex-1 w-full px-3 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 overflow-hidden relative z-10 pb-20 md:pb-0">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentPath}
@@ -242,6 +241,7 @@ function AppContent() {
         </AnimatePresence>
       </main>
       <Footer navigate={navigate} />
+      <MobileBottomNav currentPath={currentPath} navigate={navigate} />
     </div>
   );
 }

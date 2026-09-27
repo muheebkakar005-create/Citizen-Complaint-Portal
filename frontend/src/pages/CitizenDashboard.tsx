@@ -63,7 +63,7 @@ export const CitizenDashboard: React.FC<CitizenDashboardProps> = ({ navigate }) 
   };
 
   return (
-    <div className="space-y-6 py-6 font-sans">
+    <div className="space-y-4 sm:space-y-6 py-4 sm:py-6 font-sans">
       {/* Welcome Technical Banner */}
       <motion.div
         initial={{ opacity: 0, y: 14 }}
